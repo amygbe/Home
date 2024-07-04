@@ -1,4 +1,4 @@
-baseURL = "https://amybell.github.io"
+baseURL = "https://yourusername.github.io/Home/"
 title = "Amy Bell"
 languageCode = "en"
 enableInlineShortcodes = true
@@ -8,7 +8,7 @@ summarylength = 10
 enableEmoji = true
 
 [params]
-author = "Author Name"
+author = "Amy Bell"
 description = "Data Scientist"
 homepage = "homepage/home.md"
 
@@ -16,7 +16,7 @@ homepage = "homepage/home.md"
 # gravatar = "soho@example.com"
 profilePicture = "images/AmyBanff.jpg"
 
-copyright = "Author Name"
+copyright = "Amy Bell"
 license = "CC BY-SA 4.0"
 licenseURL = "https://creativecommons.org/licenses/by-sa/4.0"
 
@@ -31,17 +31,17 @@ customJs = ["js/blog.js"]
   [[params.socialIcons]]
   icon = "fa-linkedin"
   title = "Linkedin"
-  url = "#"
+  url = "https://www.linkedin.com/in/amy-bell-/"
 
   [[params.socialIcons]]
   icon = "fa-github"
   title = "GitHub"
-  url = "#"
+  url = "https://github.com/amygbe"
 
-  [[params.socialIcons]]
-  icon = "fa-twitter"
-  title = "Twitter"
-  url = "#"
+  #[[params.socialIcons]]
+  #icon = "fa-twitter"
+  #title = "Twitter"
+  #url = "#"
 
 [menu]
 

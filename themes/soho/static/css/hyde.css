@@ -174,28 +174,12 @@ footer a,
   color: #49757a;
 }
 
-.read-more-link {
-  margin-top: 1rem;
-}
-
-.read-more-link a {
-  padding: 8px 16px;
-  border: 1px solid;
-  border-color: #49757a;
-  border-radius: 4px;
-}
-
-.read-more-link a:hover {
-  text-decoration: none;
-  color: #fff;
-  background-color: #49757a;
-}
 
 .pull-right {
   float: right;
 }
 
-ul.posts {
+.posts {
   list-style: none;
   padding: 0 1rem;
 }
@@ -205,7 +189,7 @@ ul.posts {
   margin-top: 1rem;
 }
 
-ul.posts li,
+.posts li,
 .sidebar nav li {
   font-size: 1.2rem;
   padding: 0.25rem 0;
@@ -221,7 +205,7 @@ ul.posts li,
     font-size: 1.2rem;
   }
 
-  ul.posts li,
+  .posts li,
   .sidebar nav li {
     font-size: inherit;
     padding: 0;
@@ -371,3 +355,43 @@ figcaption {
 .nowrap {
   white-space: nowrap;
 }
+
+
+.post-preview {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.post-preview h2 {
+  margin-top: 0;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.read-more {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #E0F4D8;  
+  color: #fff;
+  text-decoration: none;
+  border-radius: 15px;  /* Increase this value for more rounded corners */
+  border: 1px solid #E0F4D8; 
+}
+
+.read-more:hover {
+  background-color: #9AC488;  
+}
+
+.post-date {
+  white-space: nowrap;
+  font-size: 0.9em;
+  color: #757575;
+}
+
