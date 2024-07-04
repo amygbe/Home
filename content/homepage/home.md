@@ -10,4 +10,4 @@ Apart from my professional pursuits, I am also a competitive cyclist, avid hiker
 
 I hope to upload some projects and fun stuff soon!
 
-![Cycling Photo](/Home/images/junimo.png)
+![Cycling Photo](/Home/images/bikepic.jpg)
