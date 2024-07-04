@@ -10,6 +10,7 @@ enableEmoji = true
 [params]
 author = "Author Name"
 description = "Data Scientist"
+homepage = "homepage/home.md"
 
 ## Set one of:
 # gravatar = "soho@example.com"
