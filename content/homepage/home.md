@@ -10,4 +10,4 @@ Apart from my professional pursuits, I am also a competitive cyclist, avid hiker
 
 I hope to upload some projects and fun stuff soon!
 
-![Cycling Photo](https://raw.githubusercontent.com/amygbe/Home/main/static/images/bikepic.jpg)
+![Cycling Photo](/images/junimo.png)
