@@ -1,0 +1,20 @@
+{{ define "main" -}}
+  <div class="posts">
+    {{- $pages := where .Site.RegularPages "Type" "in" .Site.Params.MainSections -}}
+    {{- $paginator := .Paginate $pages -}}
+
+    {{ range $paginator.Pages }}
+      <article class="post">
+        <h1 class="post-title">
+          {{ .Title }}
+        </h1>
+
+        <div>
+          {{ .Content }}
+        </div>
+      </article>
+    {{- end }}
+  </div>
+
+  {{ template "_internal/pagination.html" . }}
+{{- end }}
