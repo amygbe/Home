@@ -20,6 +20,7 @@
   <link type="text/css" rel="stylesheet" href="{{ `css/hyde.css` | relURL }}">
   {{ partial "theme-color.html" . }}
 
+  <!-- Load custom CSS after other CSS files to ensure it takes precedence -->
   {{ range $.Site.Params.customCss -}}
   <link type="text/css" rel="stylesheet" href="{{ . | relURL }}">
   {{- end}}

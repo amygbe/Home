@@ -356,16 +356,40 @@ figcaption {
   white-space: nowrap;
 }
 
-
-.post-preview {
-  margin-bottom: 30px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+ul.posts .post-preview h2 {
+  margin-top: 0;
 }
+
+ul.posts .post-preview .post-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+ul.posts .post-preview .post-content {
+  flex: 1;
+}
+
+ul.posts .post-preview .post-image {
+  width: 200px; /* Adjust the width as needed */
+  height: auto;
+  margin-left: 20px; /* Space between the text and the image */
+  border-radius: 5px; /* Optional: adds rounded corners */
+  object-fit: cover; /* Ensures the image covers the area */
+}
+
 
 .post-preview h2 {
   margin-top: 0;
+}
+
+ul.posts .post-preview {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;  /* This adds the border outline */
+  border-radius: 5px;
 }
 
 .post-footer {
@@ -394,4 +418,9 @@ figcaption {
   font-size: 0.9em;
   color: #757575;
 }
+
+
+  
+
+
 

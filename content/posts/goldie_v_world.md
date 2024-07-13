@@ -1,19 +1,17 @@
+
 +++
 author = "Amy Bell"
 title = "Logistic Regression: Goldie Versus The World"
 date = "2024-06-28"
 description = "Article demonstrating Goldie."
-tags = [
-    "logistsic regression",
-    "python",
-]
-categories = [
-    "themes",
-    "syntax",
-]
+tags = ["logistic regression", "python"]
+categories = ["themes", "syntax"]
 series = ["Themes Guide"]
 aliases = ["migrate-from-jekyl"]
+image = "/Home/images/goldie.png"
 +++
+
+
 
 
 As I've been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie. I have hundreds of photos of Goldie on my phone, surely enough to train a model and do some binary classification with. Without further ado, let's get into it!
