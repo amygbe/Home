@@ -388,8 +388,8 @@ ul.posts .post-preview {
   flex-direction: column;
   margin-bottom: 30px;
   padding: 20px;
-  border: 1px solid #ddd;  /* This adds the border outline */
-  border-radius: 5px;
+  border: 2px solid rgb(162, 163, 123);  /* This adds the border outline */
+  border-radius: 15px;
 }
 
 .post-footer {
@@ -402,15 +402,14 @@ ul.posts .post-preview {
 .read-more {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #E0F4D8;  
+  background-color: #ac8f5a;  
   color: #fff;
   text-decoration: none;
   border-radius: 15px;  /* Increase this value for more rounded corners */
-  border: 1px solid #E0F4D8; 
 }
 
 .read-more:hover {
-  background-color: #9AC488;  
+  background-color: #7a986c;  
 }
 
 .post-date {
@@ -419,7 +418,52 @@ ul.posts .post-preview {
   color: #757575;
 }
 
+/*****************************/
+/* CHANGING SITE COLOURS!!!! */
+/*****************************/
 
+
+/* Update the body background color to manilla */
+body {
+  background-color: #F5DEB3 !important; /* Manilla color */
+}
+
+/* Ensure the main content area has the same background color */
+.main-content {
+  background-color: #F5DEB3 !important; /* Manilla color */
+}
+
+/* Ensure the sidebar remains green */
+.sidebar {
+  background-color: #2f523e !important;
+  color: #fff;
+}
+
+
+/* Change sidebar links and heading colors to manilla */
+.sidebar a,
+.sidebar-about h1,
+.sidebar-about h2 {
+  color: #F5DEB3 !important; /* Manilla color */
+}
+
+/* Update other sidebar elements to have manilla text color */
+.sidebar nav li,
+.sidebar nav a {
+  color: #F5DEB3 !important; /* Manilla color */
+}
+
+/* Target the "Data Scientist" text specifically */
+.sidebar-about p {
+  color: #F5DEB3 !important; /* Manilla color */
+}
+
+/* Update the border color of the circle image */
+.img-headshot {
+  border: 6px solid #F5DEB3 !important; /* Manilla color */
+  height: 180px;
+  width: 180px;
+}
   
 
 
