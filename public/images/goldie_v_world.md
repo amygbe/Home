@@ -4,8 +4,9 @@ title = "Logistic Regression: Goldie Versus The World"
 date = "2024-06-28"
 description = "Article demonstrating Goldie."
 tags = [
-    "logistsic regression",
-    "python",
+    "markdown",
+    "css",
+    "html",
 ]
 categories = [
     "themes",
@@ -127,7 +128,7 @@ else:
 print ("y = " + str(train_labels[index]) + ", " + result)
 
 ```
-![goldie_image](/Home/images/goldie_test.png)
+![goldie_image](/Home/images/goldie_test.jpg)
 
 
 ### Reshape and standardize
@@ -350,5 +351,3 @@ train accuracy: 97.70642201834862 %
 test accuracy: 79.8780487804878 %
 
 Nearly 80%, not too bad! Before adding in the regularization term, the test accuracy was a grim 65% so this is looking much nicer. I found of all the things I added to the simplist version of a logistric regression model, the regulairization term improved the accuracy the most. I also found the cost was jumping all over the place with each iteration when I had the learning rate at 0.1 and 0.01. When I decreased it even further to 0.001, the costs finally started to look at lot smoother so I kept it there. Take a look at the plot of the costs!
-
-![costs_graph](/Home/images/cost_over_iterations.png)
