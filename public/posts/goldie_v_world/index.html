@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><script src="/Home/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Home/livereload" data-no-instant defer></script>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.128.0">
+
+  <title>Logistic Regression: Goldie Versus The World &middot; Amy Bell</title>
+
+  <meta name="description" content="Article demonstrating Goldie." />
+
+  
+  <meta itemprop="name" content="Logistic Regression: Goldie Versus The World">
+  <meta itemprop="description" content="Article demonstrating Goldie.">
+  <meta itemprop="datePublished" content="2024-06-28T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-28T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1704">
+  <meta itemprop="keywords" content="Markdown,Css,Html">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Logistic Regression: Goldie Versus The World">
+  <meta name="twitter:description" content="Article demonstrating Goldie.">
+
+
+<meta property="og:url" content="http://localhost:1313/Home/posts/goldie_v_world/">
+  <meta property="og:site_name" content="Amy Bell">
+  <meta property="og:title" content="Logistic Regression: Goldie Versus The World">
+  <meta property="og:description" content="Article demonstrating Goldie.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-06-28T00:00:00+00:00">
+    <meta property="article:tag" content="Markdown">
+    <meta property="article:tag" content="Css">
+    <meta property="article:tag" content="Html">
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type":"Person",
+      "@id": "http://localhost:1313/Home/#author",
+      "name": "Amy Bell",
+      "image": {
+        "@type":"ImageObject",
+        
+        "url": "http://localhost:1313/Home/images/AmyBanff.jpg"
+        
+      },
+      "description": "Data Scientist"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "http://localhost:1313/Home/#website",
+      "url": "http://localhost:1313/Home/",
+      "name": "Amy Bell",
+      "description": "Data Scientist",
+      "publisher": {
+        "@id": "http://localhost:1313/Home/#author"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "http://localhost:1313/Home/posts/goldie_v_world/#webpage",
+      "url": "http://localhost:1313/Home/posts/goldie_v_world/",
+      "name": "Logistic Regression: Goldie Versus The World",
+      "isPartOf": {
+        "@id": "http://localhost:1313/Home/#website"
+      },
+      "about": {
+         "@id": "http://localhost:1313/Home/#author"
+      },
+      "datePublished": "2024-06-28T00:00:00+00:00",
+      "dateModified": "2024-06-28T00:00:00+00:00",
+      "description": "Article demonstrating Goldie.",
+      "inLanguage": "en",
+      "potentialAction": [
+        {
+          "@type": "ReadAction",
+          "target": [
+            "http://localhost:1313/Home/posts/goldie_v_world/"
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "isPartOf": {
+        "@id": "http://localhost:1313/Home/posts/goldie_v_world/#webpage"
+      },
+      "mainEntityOfPage": {
+        "@id": "http://localhost:1313/Home/posts/goldie_v_world/#webpage"
+      },
+      "headline": "Logistic Regression: Goldie Versus The World",
+      "datePublished": "2024-06-28T00:00:00+00:00",
+      "dateModified": "2024-06-28T00:00:00+00:00",
+      "publisher": {
+        "@id": "http://localhost:1313/Home/#author"
+      },
+      "keywords": [
+        "Markdown",
+        "Css",
+        "Html"
+      ],
+      "articleSection": [
+        "Themes",
+        "Syntax"
+      ],
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Amy Bell"
+      },
+      "potentialAction": [
+        {
+          "@type": "CommentAction",
+          "name": "Comment",
+          "target": [
+            "http://localhost:1313/Home/posts/goldie_v_world/#comments"
+          ]
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+
+
+  <link type="text/css" rel="stylesheet" href="/Home/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="/Home/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="/Home/css/hyde.css">
+  
+<style type="text/css">
+  .sidebar {
+    background-color: #2f523e;
+  }
+
+  .read-more-link a {
+    border-color: #2f523e;
+  }
+
+  .read-more-link a:hover {
+    background-color: #2f523e;
+  }
+
+  .pagination li a {
+    color: #2f523e;
+    border: 1px solid #2f523e;
+  }
+
+  .pagination li.active a {
+    background-color: #2f523e;
+  }
+
+  .pagination li a:hover {
+    background-color: #2f523e;
+    opacity: 0.75;
+  }
+
+  footer a,
+  .content a,
+  .related-posts li a:hover {
+    color: #2f523e;
+  }
+</style>
+
+
+
+  <link type="text/css" rel="stylesheet" href="/Home/css/blog.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="icon" type="image/png" href="/Home/favicon.png">
+
+  
+  </head>
+<body>
+  <aside class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      
+        
+        <div class="author-image">
+          <a href="http://localhost:1313/Home/">
+            <img src="/Home/images/AmyBanff.jpg" class="img-circle img-headshot center" alt="Profile Picture">
+          </a>
+        </div>
+        
+      
+
+      <h1>Amy Bell</h1>
+
+      
+      <p class="lead">Data Scientist</p>
+      
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="http://localhost:1313/Home/">Home</a>
+        </li>
+        <li>
+          <a href="/Home/posts/">Posts</a>
+        </li><li>
+          <a href="/Home/about/">About</a>
+        </li>
+      </ul>
+    </nav>
+
+    <section class="social-icons">
+      
+      <a href="https://www.linkedin.com/in/amy-bell-/" rel="me" title="Linkedin" target="_blank">
+        <i class="fab fa-linkedin" aria-hidden="true"></i>
+      </a>
+      
+      <a href="https://github.com/amygbe" rel="me" title="GitHub" target="_blank">
+        <i class="fab fa-github" aria-hidden="true"></i>
+      </a>
+      
+    </section>
+  </div>
+</aside>
+
+
+  <main class="content container">
+  <div class="post">
+  <h1 class="title">Logistic Regression: Goldie Versus The World</h1>
+  
+
+  <div class="post-date">
+    <time datetime="2024-06-28T00:00:00Z">Jun 28, 2024</time> <span class="readtime">&middot; 8 min read</span>
+  </div>
+
+  <div>
+  <p>As I&rsquo;ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie. I have hundreds of photos of Goldie on my phone, surely enough to train a model and do some binary classification with. Without further ado, let&rsquo;s get into it!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> proj_fcns <span style="color:#f92672">import</span> sigmoid, initialize_parameters, plot_costs
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span></code></pre></div><h3 id="data-set-up">Data set up</h3>
+<p>Let&rsquo;s begin by creating our dataset. I already have two folders that contain ~400 images of goldie and 400 random images I collected from Upsplash using their API (see guthub for image collection process).</p>
+<p>Since I have all the images I want to use, I want to bring them in as arrays where each RGB value is recorded for each pixel for every images. I then want to assign the label 1 to all my Goldie images and 0 to all the random non-Goldie images.</p>
+<p>I&rsquo;m also going to crop every images so the aspect ratio is consistant (don&rsquo;t want the images to look stretched or squished) and divide each images into 128 by 128 pixels.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_images</span>(folder, label, img_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">128</span>)):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Loads images from a folder and assigns them a label.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        folder (str): Directory containing images.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        label (0 or 1): Label assigned to each image.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        img_size (tuple): dimentions to resize images (width, height). Default is (128, 128).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Lists of preprocessed images and their labels.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    images <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(folder):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.jpg&#34;</span>) <span style="color:#f92672">or</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.jpeg&#34;</span>) <span style="color:#f92672">or</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.png&#34;</span>):
+</span></span><span style="display:flex;"><span>            img_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(folder, filename)
+</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(img_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>)  <span style="color:#75715e"># Convert to RGB</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Crop the image to a square</span>
+</span></span><span style="display:flex;"><span>            width, height <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> width <span style="color:#f92672">!=</span> height:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> width <span style="color:#f92672">&gt;</span> height:
+</span></span><span style="display:flex;"><span>                    left <span style="color:#f92672">=</span> (width <span style="color:#f92672">-</span> height) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>                    right <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> height
+</span></span><span style="display:flex;"><span>                    top <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>                    bottom <span style="color:#f92672">=</span> height
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    top <span style="color:#f92672">=</span> (height <span style="color:#f92672">-</span> width) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>                    bottom <span style="color:#f92672">=</span> top <span style="color:#f92672">+</span> width
+</span></span><span style="display:flex;"><span>                    left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>                    right <span style="color:#f92672">=</span> width
+</span></span><span style="display:flex;"><span>                img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>crop((left, top, right, bottom))
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Resize the image to the desired size</span>
+</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>resize(img_size)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            img_array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
+</span></span><span style="display:flex;"><span>            images<span style="color:#f92672">.</span>append(img_array)
+</span></span><span style="display:flex;"><span>            labels<span style="color:#f92672">.</span>append(label)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> images, labels
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>base_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Construct the relative path to the images folder</span>
+</span></span><span style="display:flex;"><span>cat_folder <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(base_path, <span style="color:#e6db74">&#34;images&#34;</span>, <span style="color:#e6db74">&#34;goldie_pics&#34;</span>)
+</span></span><span style="display:flex;"><span>not_cat_folder <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(base_path, <span style="color:#e6db74">&#34;images&#34;</span>, <span style="color:#e6db74">&#34;random_pics&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load images</span>
+</span></span><span style="display:flex;"><span>cat_images, cat_labels <span style="color:#f92672">=</span> load_images(cat_folder, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>not_cat_images, not_cat_labels <span style="color:#f92672">=</span> load_images(not_cat_folder, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Combine the datasets</span>
+</span></span><span style="display:flex;"><span>all_images <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(cat_images <span style="color:#f92672">+</span> not_cat_images)
+</span></span><span style="display:flex;"><span>all_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(cat_labels <span style="color:#f92672">+</span> not_cat_labels)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Shuffle the dataset</span>
+</span></span><span style="display:flex;"><span>shuffle_indices <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(len(all_labels))
+</span></span><span style="display:flex;"><span>all_images <span style="color:#f92672">=</span> all_images[shuffle_indices]
+</span></span><span style="display:flex;"><span>all_labels <span style="color:#f92672">=</span> all_labels[shuffle_indices]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Split into training and testing sets (80% train, 20% test)</span>
+</span></span><span style="display:flex;"><span>split_index <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">0.8</span> <span style="color:#f92672">*</span> len(all_labels))
+</span></span><span style="display:flex;"><span>train_images <span style="color:#f92672">=</span> all_images[:split_index]
+</span></span><span style="display:flex;"><span>train_labels <span style="color:#f92672">=</span> all_labels[:split_index]
+</span></span><span style="display:flex;"><span>test_images <span style="color:#f92672">=</span> all_images[split_index:]
+</span></span><span style="display:flex;"><span>test_labels <span style="color:#f92672">=</span> all_labels[split_index:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reshape</span>
+</span></span><span style="display:flex;"><span>train_images_flatten <span style="color:#f92672">=</span> train_images<span style="color:#f92672">.</span>reshape(train_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>test_images_flatten <span style="color:#f92672">=</span> test_images<span style="color:#f92672">.</span>reshape(test_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standardize </span>
+</span></span><span style="display:flex;"><span>train_set <span style="color:#f92672">=</span> train_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+</span></span><span style="display:flex;"><span>test_set <span style="color:#f92672">=</span> test_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+</span></span></code></pre></div><h2 id="test-images">Test images</h2>
+<p>To make sure the images look good loaded in, let&rsquo;s just take a quick look at a few examples to see what we&rsquo;re working with.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>index <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># Change index to see what different pics are in the dataset!</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(train_images[index])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> train_labels[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Yay it&#39;s Goldie!!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Boo, not a Goldie pic&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print (<span style="color:#e6db74">&#34;y = &#34;</span> <span style="color:#f92672">+</span> str(train_labels[index]) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, &#34;</span> <span style="color:#f92672">+</span> result)
+</span></span></code></pre></div><p><img src="/Home/images/goldie_test.jpg" alt="goldie_image"></p>
+<h3 id="reshape-and-standardize">Reshape and standardize</h3>
+<p>Now let&rsquo;s do some organization. We want a 2D array so let&rsquo;s reshape and standardize our data. To standardize, I&rsquo;m dividing by 255 since the RGB values range from 0 to 255.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reshape</span>
+</span></span><span style="display:flex;"><span>train_images_flatten <span style="color:#f92672">=</span> train_images<span style="color:#f92672">.</span>reshape(train_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>test_images_flatten <span style="color:#f92672">=</span> test_images<span style="color:#f92672">.</span>reshape(test_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standardize </span>
+</span></span><span style="display:flex;"><span>train_set <span style="color:#f92672">=</span> train_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+</span></span><span style="display:flex;"><span>test_set <span style="color:#f92672">=</span> test_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+</span></span></code></pre></div><h3 id="propogation">Propogation</h3>
+<p>Now I want to compute the cost function and gradients using forward and backward propogation.</p>
+<p>I&rsquo;m going to use regularization for this to prevent overfitting. Without regularization, both the training and test accuracy of the model was ~15% less accurate! A model that can only detect a goldie image two thirds of the time is not <em>that</em> much better than random chance!</p>
+<p>I&rsquo;m choosing to use L1 regularization (Lasso Regression) with the idea that the pixels on the outside of the image should not have as much impact on image classification as the images near the centre of the image. I believe most images of Goldie shoud be (at least somewhat) centred.</p>
+<p>This means the cost function is going to look a little different - there&rsquo;s an added term at the end which adds the sum of the absolute value of the weights to the cost function. Here&rsquo;s what the cost function now looks like:</p>
+<p>$$
+J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ -y^{(i)} \log(a^{(i)}) - (1 - y^{(i)}) \log(1 - a^{(i)}) \right] + \frac{\lambda}{m} \sum_{j=1}^{n} |w_j|</p>
+<p>$$</p>
+<p>Also note the sigmoid function $\sigma (z) = \frac{1}{1 + e^{-z}}$ for $z = w^T x + b$ is used to map the values between 0 and 1 so the results can be interpreted as a probability.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">propagate</span>(w, b, X, Y, lambda_reg):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Implements forward and backward propagation for the model.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y (ndarray): True labels, shape (1, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Gradients (dict with &#34;dw&#34; and &#34;db&#34;) and cost.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Forward propagation</span>
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> sigmoid(np<span style="color:#f92672">.</span>dot(w<span style="color:#f92672">.</span>T, X) <span style="color:#f92672">+</span> b)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Add epsilon to avoid log(0) issues</span>
+</span></span><span style="display:flex;"><span>    epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-10</span>
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(A, epsilon, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> epsilon)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Cost function</span>
+</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(Y <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log(A) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> Y) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> A))
+</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">+=</span> (lambda_reg <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>abs(w))  <span style="color:#75715e"># L1 Regularization term</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Backward propagation</span>
+</span></span><span style="display:flex;"><span>    dw <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>dot(X, (A <span style="color:#f92672">-</span> Y)<span style="color:#f92672">.</span>T) <span style="color:#f92672">+</span> (lambda_reg <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sign(w)  <span style="color:#75715e"># L1 Regularization term</span>
+</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(A <span style="color:#f92672">-</span> Y)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Clip gradients to avoid massive gradients</span>
+</span></span><span style="display:flex;"><span>    dw <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(dw, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(db, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>squeeze(cost)
+</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dw&#34;</span>: dw,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;db&#34;</span>: db}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> grads, cost
+</span></span></code></pre></div><h3 id="optimization">Optimization</h3>
+<p>The aim is to minimize the cost function</p>
+<p>To do this, the propogation function defined above is used to get the current gradients for the weights (dw) and bias (db). These values are used in gradient descent to calculate the cost. With each iteration, weights and bias will get updated to minimize the cost.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">optimize</span>(w, b, X, Y, num_iterations, learning_rate, lambda_reg, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Optimizes parameters using gradient descent.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y (ndarray): True labels, shape (1, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        num_iterations (int): Number of iterations for optimization.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        learning_rate (float): Learning rate for gradient descent.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Optimized parameters (dict with &#34;w&#34; and &#34;b&#34;), gradients (dict with &#34;dw&#34; and &#34;db&#34;), and list of costs.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    costs <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_iterations):
+</span></span><span style="display:flex;"><span>        grads, cost <span style="color:#f92672">=</span> propagate(w, b, X, Y, lambda_reg)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        dw <span style="color:#f92672">=</span> grads[<span style="color:#e6db74">&#34;dw&#34;</span>]
+</span></span><span style="display:flex;"><span>        db <span style="color:#f92672">=</span> grads[<span style="color:#e6db74">&#34;db&#34;</span>]
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        w <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> dw
+</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> db
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> i <span style="color:#f92672">==</span> num_iterations <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            costs<span style="color:#f92672">.</span>append(cost)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> print_cost <span style="color:#f92672">and</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> i <span style="color:#f92672">==</span> num_iterations <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Cost after iteration </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>cost<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;w&#34;</span>: w, <span style="color:#e6db74">&#34;b&#34;</span>: b}
+</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dw&#34;</span>: dw, <span style="color:#e6db74">&#34;db&#34;</span>: db}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> params, grads, costs
+</span></span><span style="display:flex;"><span>    
+</span></span></code></pre></div><h3 id="make-predictions">Make Predictions</h3>
+<p>The follow function will be used to make the predictions - if we get a value over 0.5 then an image of Goldie is predicted! Otherwise it&rsquo;s predicted to be a random, non-goldie image.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(w, b, X):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Predicts labels for input data using learned parameters.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ndarray: Predicted labels, shape (1, number of examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    Y_prediction <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, m))
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>reshape(X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> sigmoid(np<span style="color:#f92672">.</span>dot(w<span style="color:#f92672">.</span>T, X) <span style="color:#f92672">+</span> b)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(A<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]):
+</span></span><span style="display:flex;"><span>        Y_prediction[<span style="color:#ae81ff">0</span>, i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> A[<span style="color:#ae81ff">0</span>, i] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Y_prediction
+</span></span></code></pre></div><h3 id="train-the-model">Train the model</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model</span>(X_train, Y_train, X_test, Y_test, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, lambda_reg<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Builds and trains a logistic regression model, then evaluates it on the test set.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X_train (ndarray): Training data, shape (dim, number of training examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y_train (ndarray): Training labels, shape (1, number of training examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X_test (ndarray): Test data, shape (dim, number of test examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y_test (ndarray): Test labels, shape (1, number of test examples).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        num_iterations (int): Number of iterations for optimization. Default is 2000.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        learning_rate (float): Learning rate for gradient descent. Default is 0.5.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter. Default is 0.1.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        dict: Dictionary containing model information including costs, predictions, parameters, learning rate, number of iterations, and regularization parameter.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    w, b <span style="color:#f92672">=</span> initialize_parameters(X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]) 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    parameters, _, costs <span style="color:#f92672">=</span> optimize(w, b, X_train, Y_train, num_iterations, learning_rate, lambda_reg, print_cost) <span style="color:#75715e"># gradient dosn&#39;t need to be assigned</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;w&#34;</span>]
+</span></span><span style="display:flex;"><span>    b <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;b&#34;</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    Y_prediction_train <span style="color:#f92672">=</span> predict(w, b, X_train)
+</span></span><span style="display:flex;"><span>    Y_prediction_test <span style="color:#f92672">=</span> predict(w, b, X_test)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;train accuracy: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> %&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#ae81ff">100</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(Y_prediction_train <span style="color:#f92672">-</span> Y_train)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;test accuracy: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> %&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#ae81ff">100</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(Y_prediction_test <span style="color:#f92672">-</span> Y_test)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;costs&#34;</span>: costs,
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;Y_prediction_train&#34;</span>: Y_prediction_train, 
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;Y_prediction_test&#34;</span>: Y_prediction_test, 
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;w&#34;</span>: w, 
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;b&#34;</span>: b,
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;learning_rate&#34;</span>: learning_rate,
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;num_iterations&#34;</span>: num_iterations,
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;lambda_reg&#34;</span>: lambda_reg}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> d
+</span></span></code></pre></div><h1 id="training">Training</h1>
+<p>I&rsquo;m going to do 5000 iterations to see how the model runs and plot the costs over iterations</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Reshape labels </span>
+</span></span><span style="display:flex;"><span>train_labels <span style="color:#f92672">=</span> train_labels<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>test_labels <span style="color:#f92672">=</span> test_labels<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Train the model</span>
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> model(train_set, train_labels, test_set, test_labels, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>, lambda_reg<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot the costs</span>
+</span></span><span style="display:flex;"><span>plot_costs(d[<span style="color:#e6db74">&#34;costs&#34;</span>])
+</span></span></code></pre></div><h1 id="results">Results</h1>
+<p>Cost after iteration 4999: 0.15570564061677383</p>
+<p>train accuracy: 97.70642201834862 %</p>
+<p>test accuracy: 79.8780487804878 %</p>
+<p>Nearly 80%, not too bad! Before adding in the regularization term, the test accuracy was a grim 65% so this is looking much nicer. I found of all the things I added to the simplist version of a logistric regression model, the regulairization term improved the accuracy the most. I also found the cost was jumping all over the place with each iteration when I had the learning rate at 0.1 and 0.01. When I decreased it even further to 0.001, the costs finally started to look at lot smoother so I kept it there. Take a look at the plot of the costs!</p>
+
+  </div>
+
+  
+<div>
+  <ul class="tags">
+  <li>
+    <a href="http://localhost:1313/Home/tags/markdown/" class="tag-link">Markdown</a>
+  </li>
+  
+  <li>
+    <a href="http://localhost:1313/Home/tags/css/" class="tag-link">Css</a>
+  </li>
+  
+  <li>
+    <a href="http://localhost:1313/Home/tags/html/" class="tag-link">Html</a>
+  </li>
+  </ul>
+</div>
+
+
+
+  <div class="share-buttons">
+  <a class="twitter-share-button"
+     href="#"
+     title="Share on Twitter"
+     data-url="http://localhost:1313/Home/posts/goldie_v_world/"
+     data-text="Logistic Regression: Goldie Versus The World"><i class="fab fa-twitter"></i></a>
+
+  <a class="linkedin-share-button"
+     href="#"
+     title="Share on LinkedIn"
+     data-url="http://localhost:1313/Home/posts/goldie_v_world/"
+     data-text="Logistic Regression: Goldie Versus The World"><i class="fab fa-linkedin-in"></i></a>
+
+  <a class="facebook-share-button"
+     href="#"
+     title="Share on Facebook"
+     data-url="http://localhost:1313/Home/posts/goldie_v_world/"
+     data-text="Logistic Regression: Goldie Versus The World"><i class="fab fa-facebook"></i></a>
+
+  <a class="telegram-share-button"
+     href="#"
+     title="Share on Telegram"
+     data-url="http://localhost:1313/Home/posts/goldie_v_world/"
+     data-text="Logistic Regression: Goldie Versus The World"><i class="fab fa-telegram"></i></a>
+
+  <a class="pinterest-share-button"
+     href="#"
+     title="Share on Pinterest"
+     data-url="http://localhost:1313/Home/posts/goldie_v_world/"
+     data-text="Logistic Regression: Goldie Versus The World"><i class="fab fa-pinterest"></i></a>
+</div>
+
+
+  
+</div>
+  </main>
+
+  <footer>
+  <div>
+    <p>
+      &copy; Amy Bell 2024
+
+      &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank">CC BY-SA 4.0</a>
+
+      
+    </p>
+  </div>
+</footer>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
+
+  <script src="/Home/js/jquery.min.js"></script>
+  <script src="/Home/js/soho.js"></script>
+
+  <script src="/Home/js/blog.js"></script>
+
+  
+</body>
+</html>
