@@ -474,3 +474,12 @@ body {
   width: 180px;
 }
 
+.custom-link {
+  color: #1E90FF; 
+  text-decoration: none; /* Remove underline */
+}
+
+.custom-link:hover {
+  color: #FF4500; 
+}
+
