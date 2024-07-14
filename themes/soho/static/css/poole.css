@@ -35,7 +35,7 @@
  * Update the foundational and global aspects of the page.
  */
 
-* {
+ * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -163,6 +163,7 @@ pre {
   line-height: 1.4;
   white-space: pre;
   background-color: #fff;
+  border: none; /* Remove the border */
 }
 pre code {
   padding: 0;
@@ -174,9 +175,7 @@ pre code {
   font-size: 90%;
   margin-bottom: 1rem;
   border-radius: 4px;
-  border: 1px solid;
-  border-color: #ddd #ddd #ccc;
-  border-radius: 3px;
+  border: none; /* Remove the border */
 }
 .highlight pre {
   margin-bottom: 0;
@@ -185,14 +184,14 @@ pre code {
   border-spacing: 0;
   padding: 0;
   margin: 0;
-  border: 0;
+  border: none; /* Remove the border */
   width: auto;
   overflow: auto;
   display: block;
 }
 .chroma .lntd {
   background-color: #fff;
-  border: 0;
+  border: none; /* Remove the border */
 }
 
 /* Quotes */

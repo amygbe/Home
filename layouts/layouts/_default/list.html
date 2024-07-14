@@ -8,10 +8,12 @@
       <div class="post-content-wrapper">
         <div class="post-content">
           <p>{{ .Summary }}</p>
-          <a href="{{ .Permalink }}" class="read-more">Read More</a>
-          {{ if eq .Kind "page" }}
-          <time class="nowrap" datetime="{{ .Date.Format "2006-01-02T15:04:05Z0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-          {{ end }}
+          <div class="post-footer">
+            <a href="{{ .Permalink }}" class="read-more">Read More</a>
+            {{ if eq .Kind "page" }}
+            <time class="nowrap post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+            {{ end }}
+          </div>
         </div>
         {{ with .Params.image }}
         <img src="{{ . }}" alt="{{ $.Title }}" class="post-image">

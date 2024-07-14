@@ -128,7 +128,7 @@ footer {
   height: 40px;
   padding: 1rem 0;
   margin: 0 1rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #924a08;
 }
 
 
@@ -399,6 +399,7 @@ ul.posts .post-preview {
   margin-top: 10px;
 }
 
+
 .read-more {
   display: inline-block;
   padding: 10px 15px;
@@ -406,6 +407,7 @@ ul.posts .post-preview {
   color: #fff;
   text-decoration: none;
   border-radius: 15px;  /* Increase this value for more rounded corners */
+  margin-right: 10px; /* Add some space between the button and the date */
 }
 
 .read-more:hover {
@@ -416,6 +418,13 @@ ul.posts .post-preview {
   white-space: nowrap;
   font-size: 0.9em;
   color: #757575;
+}
+
+.post-footer .post-date {
+  white-space: nowrap;
+  font-size: 0.7em; /* Reduce font size */
+  color: #757575;
+  margin-left: 10px; /* Add some space between the button and the date */
 }
 
 /*****************************/
@@ -464,7 +473,4 @@ body {
   height: 180px;
   width: 180px;
 }
-  
-
-
 

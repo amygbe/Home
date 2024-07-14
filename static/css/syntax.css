@@ -1,0 +1,68 @@
+/* Gruvbox Light Theme for code blocks */
+pre, code {
+    background-color: #fde9c0; /* Manilla background */
+    color: #626e35; /* Dark green text */
+    font-family: 'Source Code Pro', monospace;
+    border-radius: 15px;
+    padding: 10px; /* Adjust padding as needed */
+    border: none; /* Remove the border */
+    box-shadow: none; /* Remove any shadow */
+}
+
+/* Syntax Highlighting Colors */
+.hljs-comment,
+.hljs-quote {
+    color: #992958;
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+    color: #b57614;
+    font-weight: bold;
+}
+
+.hljs-literal,
+.hljs-number,
+.hljs-symbol,
+.hljs-tag {
+    color: #d65d0e;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-type,
+.hljs-name,
+.hljs-variable {
+    color: #afaf21;
+}
+
+.hljs-class .hljs-title {
+    color: #b16286;
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #689d6a;
+}
+
+.hljs-meta {
+    color: #fb4934;
+    font-weight: bold;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #b7647f;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}

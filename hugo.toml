@@ -24,7 +24,7 @@ licenseURL = "https://creativecommons.org/licenses/by-sa/4.0"
 themeColor = "#2f523e"
 
 ## Set custom CSS and/or JS to override site defaults.
-customCss = ["css/blog.css"]
+customCss = ["css/syntax.css"]
 customJs = ["js/blog.js"]
 
   ## Set as many as you want.
@@ -64,13 +64,14 @@ customJs = ["js/blog.js"]
 
 [markup]
 
-  [markup.highlight]
+
+ [markup.highlight]
   codeFences = true
   guessSyntax = false
   hl_Lines = ""
   lineNoStart = 1
   lineNos = false
   lineNumbersInTable = true
-  noClasses = true # if false, you need to provide you own custom CSS
-  style = "monokai"
+  noClasses = false # true if you want to use monokai styling
+  #style = "monokai"
   tabWidth = 4

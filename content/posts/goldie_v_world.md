@@ -149,14 +149,17 @@ I'm going to use regularization for this to prevent overfitting. Without regular
 
 I'm choosing to use L1 regularization (Lasso Regression) with the idea that the pixels on the outside of the image should not have as much impact on image classification as the images near the centre of the image. I believe most images of Goldie shoud be (at least somewhat) centred. 
 
-This means the cost function is going to look a little different - there's an added term at the end which adds the sum of the absolute value of the weights to the cost function. Here's what the cost function now looks like:
+This means the cost function is going to look a little different - there’s an added term at the end which adds the sum of the absolute value of the weights to the cost function. Here’s what the cost function now looks like:
+
 
 $$
 J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ -y^{(i)} \log(a^{(i)}) - (1 - y^{(i)}) \log(1 - a^{(i)}) \right] + \frac{\lambda}{m} \sum_{j=1}^{n} |w_j|
-
 $$
 
-Also note the sigmoid function $\sigma (z) = \frac{1}{1 + e^{-z}}$ for $z = w^T x + b$ is used to map the values between 0 and 1 so the results can be interpreted as a probability.
+
+Also, note the sigmoid function:
+$$\sigma (z) = \frac{1}{1 + e^{-z}} \quad \text{where} \quad Z = w^T x + b$$
+ is used to map the values between 0 and 1 so the results can be interpreted as a probability.
 
 
 ```python

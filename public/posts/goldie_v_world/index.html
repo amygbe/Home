@@ -3,6 +3,9 @@
 <head><script src="/Home/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Home/livereload" data-no-instant defer></script>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/gruvbox-light.min.css">
+
   <meta name="generator" content="Hugo 0.128.0">
 
   <title>Logistic Regression: Goldie Versus The World &middot; Amy Bell</title>
@@ -14,7 +17,7 @@
   <meta itemprop="description" content="Article demonstrating Goldie.">
   <meta itemprop="datePublished" content="2024-06-28T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-06-28T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1704">
+  <meta itemprop="wordCount" content="1706">
   <meta itemprop="keywords" content="Logistic Regression,Python">
 
 
@@ -173,7 +176,7 @@
 
 
   
-  <link type="text/css" rel="stylesheet" href="/Home/css/blog.css">
+  <link type="text/css" rel="stylesheet" href="/Home/css/syntax.css">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -231,295 +234,297 @@
 </aside>
 
 
-  <main class="content container main-content">
+  <main class="content container">
   <div class="post">
   <h1 class="title">Logistic Regression: Goldie Versus The World</h1>
   
 
   <div class="post-date">
-    <time datetime="2024-06-28T00:00:00Z">Jun 28, 2024</time> <span class="readtime">&middot; 8 min read</span>
+    <time datetime="2024-06-28T00:00:00Z">Jun 28, 2024</time> <span class="readtime">&middot; 9 min read</span>
   </div>
 
   <div>
   <p>As I&rsquo;ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie. I have hundreds of photos of Goldie on my phone, surely enough to train a model and do some binary classification with. Without further ado, let&rsquo;s get into it!</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load packages</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> proj_fcns <span style="color:#f92672">import</span> sigmoid, initialize_parameters, plot_costs
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Load packages</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">proj_fcns</span> <span class="kn">import</span> <span class="n">sigmoid</span><span class="p">,</span> <span class="n">initialize_parameters</span><span class="p">,</span> <span class="n">plot_costs</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 </span></span></code></pre></div><h3 id="data-set-up">Data set up</h3>
 <p>Let&rsquo;s begin by creating our dataset. I already have two folders that contain ~400 images of goldie and 400 random images I collected from Upsplash using their API (see guthub for image collection process).</p>
 <p>Since I have all the images I want to use, I want to bring them in as arrays where each RGB value is recorded for each pixel for every images. I then want to assign the label 1 to all my Goldie images and 0 to all the random non-Goldie images.</p>
 <p>I&rsquo;m also going to crop every images so the aspect ratio is consistant (don&rsquo;t want the images to look stretched or squished) and divide each images into 128 by 128 pixels.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_images</span>(folder, label, img_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">128</span>)):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Loads images from a folder and assigns them a label.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        folder (str): Directory containing images.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        label (0 or 1): Label assigned to each image.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        img_size (tuple): dimentions to resize images (width, height). Default is (128, 128).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Lists of preprocessed images and their labels.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    images <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(folder):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.jpg&#34;</span>) <span style="color:#f92672">or</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.jpeg&#34;</span>) <span style="color:#f92672">or</span> filename<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.png&#34;</span>):
-</span></span><span style="display:flex;"><span>            img_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(folder, filename)
-</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(img_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>)  <span style="color:#75715e"># Convert to RGB</span>
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Crop the image to a square</span>
-</span></span><span style="display:flex;"><span>            width, height <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>size
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> width <span style="color:#f92672">!=</span> height:
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> width <span style="color:#f92672">&gt;</span> height:
-</span></span><span style="display:flex;"><span>                    left <span style="color:#f92672">=</span> (width <span style="color:#f92672">-</span> height) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>                    right <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> height
-</span></span><span style="display:flex;"><span>                    top <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>                    bottom <span style="color:#f92672">=</span> height
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                    top <span style="color:#f92672">=</span> (height <span style="color:#f92672">-</span> width) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>                    bottom <span style="color:#f92672">=</span> top <span style="color:#f92672">+</span> width
-</span></span><span style="display:flex;"><span>                    left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>                    right <span style="color:#f92672">=</span> width
-</span></span><span style="display:flex;"><span>                img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>crop((left, top, right, bottom))
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Resize the image to the desired size</span>
-</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>resize(img_size)
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            img_array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
-</span></span><span style="display:flex;"><span>            images<span style="color:#f92672">.</span>append(img_array)
-</span></span><span style="display:flex;"><span>            labels<span style="color:#f92672">.</span>append(label)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> images, labels
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>base_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Construct the relative path to the images folder</span>
-</span></span><span style="display:flex;"><span>cat_folder <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(base_path, <span style="color:#e6db74">&#34;images&#34;</span>, <span style="color:#e6db74">&#34;goldie_pics&#34;</span>)
-</span></span><span style="display:flex;"><span>not_cat_folder <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(base_path, <span style="color:#e6db74">&#34;images&#34;</span>, <span style="color:#e6db74">&#34;random_pics&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load images</span>
-</span></span><span style="display:flex;"><span>cat_images, cat_labels <span style="color:#f92672">=</span> load_images(cat_folder, <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>not_cat_images, not_cat_labels <span style="color:#f92672">=</span> load_images(not_cat_folder, <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Combine the datasets</span>
-</span></span><span style="display:flex;"><span>all_images <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(cat_images <span style="color:#f92672">+</span> not_cat_images)
-</span></span><span style="display:flex;"><span>all_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(cat_labels <span style="color:#f92672">+</span> not_cat_labels)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Shuffle the dataset</span>
-</span></span><span style="display:flex;"><span>shuffle_indices <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(len(all_labels))
-</span></span><span style="display:flex;"><span>all_images <span style="color:#f92672">=</span> all_images[shuffle_indices]
-</span></span><span style="display:flex;"><span>all_labels <span style="color:#f92672">=</span> all_labels[shuffle_indices]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Split into training and testing sets (80% train, 20% test)</span>
-</span></span><span style="display:flex;"><span>split_index <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">0.8</span> <span style="color:#f92672">*</span> len(all_labels))
-</span></span><span style="display:flex;"><span>train_images <span style="color:#f92672">=</span> all_images[:split_index]
-</span></span><span style="display:flex;"><span>train_labels <span style="color:#f92672">=</span> all_labels[:split_index]
-</span></span><span style="display:flex;"><span>test_images <span style="color:#f92672">=</span> all_images[split_index:]
-</span></span><span style="display:flex;"><span>test_labels <span style="color:#f92672">=</span> all_labels[split_index:]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reshape</span>
-</span></span><span style="display:flex;"><span>train_images_flatten <span style="color:#f92672">=</span> train_images<span style="color:#f92672">.</span>reshape(train_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
-</span></span><span style="display:flex;"><span>test_images_flatten <span style="color:#f92672">=</span> test_images<span style="color:#f92672">.</span>reshape(test_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standardize </span>
-</span></span><span style="display:flex;"><span>train_set <span style="color:#f92672">=</span> train_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
-</span></span><span style="display:flex;"><span>test_set <span style="color:#f92672">=</span> test_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">img_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Loads images from a folder and assigns them a label.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        folder (str): Directory containing images.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        label (0 or 1): Label assigned to each image.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        img_size (tuple): dimentions to resize images (width, height). Default is (128, 128).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        tuple: Lists of preprocessed images and their labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.jpg&#34;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.jpeg&#34;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.png&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>  <span class="c1"># Convert to RGB</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># Crop the image to a square</span>
+</span></span><span class="line"><span class="cl">            <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">width</span> <span class="o">!=</span> <span class="n">height</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">left</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">right</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="n">height</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">top</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bottom</span> <span class="o">=</span> <span class="n">height</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bottom</span> <span class="o">=</span> <span class="n">top</span> <span class="o">+</span> <span class="n">width</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">right</span> <span class="o">=</span> <span class="n">width</span>
+</span></span><span class="line"><span class="cl">                <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># Resize the image to the desired size</span>
+</span></span><span class="line"><span class="cl">            <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="n">img_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_array</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Construct the relative path to the images folder</span>
+</span></span><span class="line"><span class="cl"><span class="n">cat_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s2">&#34;images&#34;</span><span class="p">,</span> <span class="s2">&#34;goldie_pics&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">not_cat_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s2">&#34;images&#34;</span><span class="p">,</span> <span class="s2">&#34;random_pics&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load images</span>
+</span></span><span class="line"><span class="cl"><span class="n">cat_images</span><span class="p">,</span> <span class="n">cat_labels</span> <span class="o">=</span> <span class="n">load_images</span><span class="p">(</span><span class="n">cat_folder</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">not_cat_images</span><span class="p">,</span> <span class="n">not_cat_labels</span> <span class="o">=</span> <span class="n">load_images</span><span class="p">(</span><span class="n">not_cat_folder</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Combine the datasets</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cat_images</span> <span class="o">+</span> <span class="n">not_cat_images</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cat_labels</span> <span class="o">+</span> <span class="n">not_cat_labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Shuffle the dataset</span>
+</span></span><span class="line"><span class="cl"><span class="n">shuffle_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_labels</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[</span><span class="n">shuffle_indices</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="p">[</span><span class="n">shuffle_indices</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Split into training and testing sets (80% train, 20% test)</span>
+</span></span><span class="line"><span class="cl"><span class="n">split_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_labels</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[:</span><span class="n">split_index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="p">[:</span><span class="n">split_index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[</span><span class="n">split_index</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="p">[</span><span class="n">split_index</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Reshape</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_images_flatten</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_images_flatten</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">test_images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Standardize </span>
+</span></span><span class="line"><span class="cl"><span class="n">train_set</span> <span class="o">=</span> <span class="n">train_images_flatten</span> <span class="o">/</span> <span class="mf">255.</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_set</span> <span class="o">=</span> <span class="n">test_images_flatten</span> <span class="o">/</span> <span class="mf">255.</span>
 </span></span></code></pre></div><h2 id="test-images">Test images</h2>
 <p>To make sure the images look good loaded in, let&rsquo;s just take a quick look at a few examples to see what we&rsquo;re working with.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>index <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># Change index to see what different pics are in the dataset!</span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(train_images[index])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> train_labels[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Yay it&#39;s Goldie!!&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Boo, not a Goldie pic&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print (<span style="color:#e6db74">&#34;y = &#34;</span> <span style="color:#f92672">+</span> str(train_labels[index]) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, &#34;</span> <span style="color:#f92672">+</span> result)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">index</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># Change index to see what different pics are in the dataset!</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train_images</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">train_labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="s2">&#34;Yay it&#39;s Goldie!!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="s2">&#34;Boo, not a Goldie pic&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;y = &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_labels</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&#34;, &#34;</span> <span class="o">+</span> <span class="n">result</span><span class="p">)</span>
 </span></span></code></pre></div><p><img src="/Home/images/goldie_test.png" alt="goldie_image"></p>
 <h3 id="reshape-and-standardize">Reshape and standardize</h3>
 <p>Now let&rsquo;s do some organization. We want a 2D array so let&rsquo;s reshape and standardize our data. To standardize, I&rsquo;m dividing by 255 since the RGB values range from 0 to 255.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reshape</span>
-</span></span><span style="display:flex;"><span>train_images_flatten <span style="color:#f92672">=</span> train_images<span style="color:#f92672">.</span>reshape(train_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
-</span></span><span style="display:flex;"><span>test_images_flatten <span style="color:#f92672">=</span> test_images<span style="color:#f92672">.</span>reshape(test_images<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standardize </span>
-</span></span><span style="display:flex;"><span>train_set <span style="color:#f92672">=</span> train_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
-</span></span><span style="display:flex;"><span>test_set <span style="color:#f92672">=</span> test_images_flatten <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Reshape</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_images_flatten</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_images_flatten</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">test_images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Standardize </span>
+</span></span><span class="line"><span class="cl"><span class="n">train_set</span> <span class="o">=</span> <span class="n">train_images_flatten</span> <span class="o">/</span> <span class="mf">255.</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_set</span> <span class="o">=</span> <span class="n">test_images_flatten</span> <span class="o">/</span> <span class="mf">255.</span>
 </span></span></code></pre></div><h3 id="propogation">Propogation</h3>
 <p>Now I want to compute the cost function and gradients using forward and backward propogation.</p>
 <p>I&rsquo;m going to use regularization for this to prevent overfitting. Without regularization, both the training and test accuracy of the model was ~15% less accurate! A model that can only detect a goldie image two thirds of the time is not <em>that</em> much better than random chance!</p>
 <p>I&rsquo;m choosing to use L1 regularization (Lasso Regression) with the idea that the pixels on the outside of the image should not have as much impact on image classification as the images near the centre of the image. I believe most images of Goldie shoud be (at least somewhat) centred.</p>
-<p>This means the cost function is going to look a little different - there&rsquo;s an added term at the end which adds the sum of the absolute value of the weights to the cost function. Here&rsquo;s what the cost function now looks like:</p>
+<p>This means the cost function is going to look a little different - there’s an added term at the end which adds the sum of the absolute value of the weights to the cost function. Here’s what the cost function now looks like:</p>
 <p>$$
-J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ -y^{(i)} \log(a^{(i)}) - (1 - y^{(i)}) \log(1 - a^{(i)}) \right] + \frac{\lambda}{m} \sum_{j=1}^{n} |w_j|</p>
-<p>$$</p>
-<p>Also note the sigmoid function $\sigma (z) = \frac{1}{1 + e^{-z}}$ for $z = w^T x + b$ is used to map the values between 0 and 1 so the results can be interpreted as a probability.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">propagate</span>(w, b, X, Y, lambda_reg):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Implements forward and backward propagation for the model.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y (ndarray): True labels, shape (1, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Gradients (dict with &#34;dw&#34; and &#34;db&#34;) and cost.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Forward propagation</span>
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> sigmoid(np<span style="color:#f92672">.</span>dot(w<span style="color:#f92672">.</span>T, X) <span style="color:#f92672">+</span> b)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Add epsilon to avoid log(0) issues</span>
-</span></span><span style="display:flex;"><span>    epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-10</span>
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(A, epsilon, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> epsilon)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Cost function</span>
-</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(Y <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log(A) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> Y) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> A))
-</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">+=</span> (lambda_reg <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>abs(w))  <span style="color:#75715e"># L1 Regularization term</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Backward propagation</span>
-</span></span><span style="display:flex;"><span>    dw <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>dot(X, (A <span style="color:#f92672">-</span> Y)<span style="color:#f92672">.</span>T) <span style="color:#f92672">+</span> (lambda_reg <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sign(w)  <span style="color:#75715e"># L1 Regularization term</span>
-</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(A <span style="color:#f92672">-</span> Y)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Clip gradients to avoid massive gradients</span>
-</span></span><span style="display:flex;"><span>    dw <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(dw, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(db, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>squeeze(cost)
-</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dw&#34;</span>: dw,
-</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;db&#34;</span>: db}
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> grads, cost
+J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ -y^{(i)} \log(a^{(i)}) - (1 - y^{(i)}) \log(1 - a^{(i)}) \right] + \frac{\lambda}{m} \sum_{j=1}^{n} |w_j|
+$$</p>
+<p>Also, note the sigmoid function:
+$$\sigma (z) = \frac{1}{1 + e^{-z}} \quad \text{where} \quad Z = w^T x + b$$
+is used to map the values between 0 and 1 so the results can be interpreted as a probability.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Implements forward and backward propagation for the model.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        b (float): Bias.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Y (ndarray): True labels, shape (1, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        lambda_reg (float): Regularization parameter.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        tuple: Gradients (dict with &#34;dw&#34; and &#34;db&#34;) and cost.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Forward propagation</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Add epsilon to avoid log(0) issues</span>
+</span></span><span class="line"><span class="cl">    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">epsilon</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Cost function</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">A</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cost</span> <span class="o">+=</span> <span class="p">(</span><span class="n">lambda_reg</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>  <span class="c1"># L1 Regularization term</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Backward propagation</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dw</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">lambda_reg</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># L1 Regularization term</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Clip gradients to avoid massive gradients</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">dw</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">cost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;dw&#34;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s2">&#34;db&#34;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span>
 </span></span></code></pre></div><h3 id="optimization">Optimization</h3>
 <p>The aim is to minimize the cost function</p>
 <p>To do this, the propogation function defined above is used to get the current gradients for the weights (dw) and bias (db). These values are used in gradient descent to calculate the cost. With each iteration, weights and bias will get updated to minimize the cost.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">optimize</span>(w, b, X, Y, num_iterations, learning_rate, lambda_reg, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Optimizes parameters using gradient descent.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y (ndarray): True labels, shape (1, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        num_iterations (int): Number of iterations for optimization.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        learning_rate (float): Learning rate for gradient descent.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        tuple: Optimized parameters (dict with &#34;w&#34; and &#34;b&#34;), gradients (dict with &#34;dw&#34; and &#34;db&#34;), and list of costs.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    costs <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_iterations):
-</span></span><span style="display:flex;"><span>        grads, cost <span style="color:#f92672">=</span> propagate(w, b, X, Y, lambda_reg)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        dw <span style="color:#f92672">=</span> grads[<span style="color:#e6db74">&#34;dw&#34;</span>]
-</span></span><span style="display:flex;"><span>        db <span style="color:#f92672">=</span> grads[<span style="color:#e6db74">&#34;db&#34;</span>]
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        w <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> dw
-</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> db
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> i <span style="color:#f92672">==</span> num_iterations <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
-</span></span><span style="display:flex;"><span>            costs<span style="color:#f92672">.</span>append(cost)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> print_cost <span style="color:#f92672">and</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> i <span style="color:#f92672">==</span> num_iterations <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Cost after iteration </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>cost<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;w&#34;</span>: w, <span style="color:#e6db74">&#34;b&#34;</span>: b}
-</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dw&#34;</span>: dw, <span style="color:#e6db74">&#34;db&#34;</span>: db}
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> params, grads, costs
-</span></span><span style="display:flex;"><span>    
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="p">,</span> <span class="n">print_cost</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Optimizes parameters using gradient descent.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        b (float): Bias.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Y (ndarray): True labels, shape (1, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        num_iterations (int): Number of iterations for optimization.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        learning_rate (float): Learning rate for gradient descent.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        lambda_reg (float): Regularization parameter.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        tuple: Optimized parameters (dict with &#34;w&#34; and &#34;b&#34;), gradients (dict with &#34;dw&#34; and &#34;db&#34;), and list of costs.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">costs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">dw</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s2">&#34;dw&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s2">&#34;db&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dw</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">db</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">num_iterations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">costs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">print_cost</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">num_iterations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Cost after iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;w&#34;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="n">b</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;dw&#34;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span> <span class="s2">&#34;db&#34;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">costs</span>
+</span></span><span class="line"><span class="cl">    
 </span></span></code></pre></div><h3 id="make-predictions">Make Predictions</h3>
 <p>The follow function will be used to make the predictions - if we get a value over 0.5 then an image of Goldie is predicted! Otherwise it&rsquo;s predicted to be a random, non-goldie image.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(w, b, X):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Predicts labels for input data using learned parameters.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        w (ndarray): Weights, shape (dim, 1).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b (float): Bias.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X (ndarray): Input data, shape (dim, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ndarray: Predicted labels, shape (1, number of examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>    Y_prediction <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, m))
-</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>reshape(X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> sigmoid(np<span style="color:#f92672">.</span>dot(w<span style="color:#f92672">.</span>T, X) <span style="color:#f92672">+</span> b)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(A<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]):
-</span></span><span style="display:flex;"><span>        Y_prediction[<span style="color:#ae81ff">0</span>, i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> A[<span style="color:#ae81ff">0</span>, i] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Y_prediction
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Predicts labels for input data using learned parameters.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        w (ndarray): Weights, shape (dim, 1).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        b (float): Bias.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        X (ndarray): Input data, shape (dim, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        ndarray: Predicted labels, shape (1, number of examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Y_prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Y_prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Y_prediction</span>
 </span></span></code></pre></div><h3 id="train-the-model">Train the model</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model</span>(X_train, Y_train, X_test, Y_test, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, lambda_reg<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Builds and trains a logistic regression model, then evaluates it on the test set.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X_train (ndarray): Training data, shape (dim, number of training examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y_train (ndarray): Training labels, shape (1, number of training examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        X_test (ndarray): Test data, shape (dim, number of test examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Y_test (ndarray): Test labels, shape (1, number of test examples).
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        num_iterations (int): Number of iterations for optimization. Default is 2000.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        learning_rate (float): Learning rate for gradient descent. Default is 0.5.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lambda_reg (float): Regularization parameter. Default is 0.1.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Returns:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        dict: Dictionary containing model information including costs, predictions, parameters, learning rate, number of iterations, and regularization parameter.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    w, b <span style="color:#f92672">=</span> initialize_parameters(X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]) 
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    parameters, _, costs <span style="color:#f92672">=</span> optimize(w, b, X_train, Y_train, num_iterations, learning_rate, lambda_reg, print_cost) <span style="color:#75715e"># gradient dosn&#39;t need to be assigned</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;w&#34;</span>]
-</span></span><span style="display:flex;"><span>    b <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;b&#34;</span>]
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    Y_prediction_train <span style="color:#f92672">=</span> predict(w, b, X_train)
-</span></span><span style="display:flex;"><span>    Y_prediction_test <span style="color:#f92672">=</span> predict(w, b, X_test)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;train accuracy: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> %&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#ae81ff">100</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(Y_prediction_train <span style="color:#f92672">-</span> Y_train)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>))
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;test accuracy: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> %&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#ae81ff">100</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(Y_prediction_test <span style="color:#f92672">-</span> Y_test)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>))
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;costs&#34;</span>: costs,
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;Y_prediction_train&#34;</span>: Y_prediction_train, 
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;Y_prediction_test&#34;</span>: Y_prediction_test, 
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;w&#34;</span>: w, 
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;b&#34;</span>: b,
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;learning_rate&#34;</span>: learning_rate,
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;num_iterations&#34;</span>: num_iterations,
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;lambda_reg&#34;</span>: lambda_reg}
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> d
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">print_cost</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Builds and trains a logistic regression model, then evaluates it on the test set.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        X_train (ndarray): Training data, shape (dim, number of training examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Y_train (ndarray): Training labels, shape (1, number of training examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        X_test (ndarray): Test data, shape (dim, number of test examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Y_test (ndarray): Test labels, shape (1, number of test examples).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        num_iterations (int): Number of iterations for optimization. Default is 2000.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        learning_rate (float): Learning rate for gradient descent. Default is 0.5.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        lambda_reg (float): Regularization parameter. Default is 0.1.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        print_cost (bool): If True, prints cost every 100 iterations. Default is False.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        dict: Dictionary containing model information including costs, predictions, parameters, learning rate, number of iterations, and regularization parameter.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">initialize_parameters</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">parameters</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">costs</span> <span class="o">=</span> <span class="n">optimize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="p">,</span> <span class="n">print_cost</span><span class="p">)</span> <span class="c1"># gradient dosn&#39;t need to be assigned</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&#34;w&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&#34;b&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">Y_prediction_train</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Y_prediction_test</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;train accuracy: </span><span class="si">{}</span><span class="s2"> %&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_prediction_train</span> <span class="o">-</span> <span class="n">Y_train</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;test accuracy: </span><span class="si">{}</span><span class="s2"> %&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_prediction_test</span> <span class="o">-</span> <span class="n">Y_test</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;costs&#34;</span><span class="p">:</span> <span class="n">costs</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;Y_prediction_train&#34;</span><span class="p">:</span> <span class="n">Y_prediction_train</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;Y_prediction_test&#34;</span><span class="p">:</span> <span class="n">Y_prediction_test</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;w&#34;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;learning_rate&#34;</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;num_iterations&#34;</span><span class="p">:</span> <span class="n">num_iterations</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;lambda_reg&#34;</span><span class="p">:</span> <span class="n">lambda_reg</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">d</span>
 </span></span></code></pre></div><h1 id="training">Training</h1>
 <p>I&rsquo;m going to do 5000 iterations to see how the model runs and plot the costs over iterations</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Reshape labels </span>
-</span></span><span style="display:flex;"><span>train_labels <span style="color:#f92672">=</span> train_labels<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>test_labels <span style="color:#f92672">=</span> test_labels<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Train the model</span>
-</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> model(train_set, train_labels, test_set, test_labels, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>, lambda_reg<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot the costs</span>
-</span></span><span style="display:flex;"><span>plot_costs(d[<span style="color:#e6db74">&#34;costs&#34;</span>])
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Reshape labels </span>
+</span></span><span class="line"><span class="cl"><span class="n">train_labels</span> <span class="o">=</span> <span class="n">train_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_labels</span> <span class="o">=</span> <span class="n">test_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Train the model</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">test_set</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">lambda_reg</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">print_cost</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Plot the costs</span>
+</span></span><span class="line"><span class="cl"><span class="n">plot_costs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&#34;costs&#34;</span><span class="p">])</span>
 </span></span></code></pre></div><h1 id="results">Results</h1>
 <p>Cost after iteration 4999: 0.15570564061677383</p>
 <p>train accuracy: 97.70642201834862 %</p>
@@ -601,6 +606,27 @@ J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \left[ -y^{(i)} \log(a^{(i)}) - (1 - y^{(i)
 
   <script src="/Home/js/blog.js"></script>
 
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js">
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: ".*|",
+        processHtmlClass: "arithmatex"
+      }
+    };
+  </script>
+
   
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  
+
 </body>
 </html>

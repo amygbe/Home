@@ -3,6 +3,9 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- new line-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/gruvbox-light.min.css">
+
   {{ hugo.Generator }}
 
   {{ if .IsHome -}}
@@ -22,7 +25,7 @@
 
   <!-- Load custom CSS after other CSS files to ensure it takes precedence -->
   {{ range $.Site.Params.customCss -}}
-  <link type="text/css" rel="stylesheet" href="{{ . | relURL }}">
+  <link type="text/css" rel="stylesheet" href="{{ `css/syntax.css` | relURL }}">
   {{- end}}
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
@@ -38,7 +41,7 @@
 <body>
   {{ partial "sidebar.html" . }}
 
-  <main class="content container main-content">
+  <main class="content container">
   {{ block "main" . -}}{{- end }}
   </main>
 
@@ -53,8 +56,29 @@
   <script src="{{ . | relURL }}"></script>
   {{- end}}
 
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js">
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: ".*|",
+        processHtmlClass: "arithmatex"
+      }
+    };
+  </script>
+
   {{ if not hugo.IsServer }}
     {{ template "_internal/google_analytics.html" . }}
   {{ end }}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  
+
 </body>
 </html>
