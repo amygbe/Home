@@ -6,12 +6,11 @@
     <description>Recent content in Homepages on Amy Bell</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 13 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/Home/homepage/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Home</title>
+      <title></title>
       <link>http://localhost:1313/Home/homepage/home/</link>
-      <pubDate>Sat, 13 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/Home/homepage/home/</guid>
       <description>About Me Hi, I’m Amy! I am a data scientist who is a big fan of predictive modeling and data viz.</description>
     </item>

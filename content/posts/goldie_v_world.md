@@ -26,11 +26,11 @@ from PIL import Image
 ```
 
 ### Data set up
-Let's begin by creating our dataset. I already have two folders that contain ~400 images of goldie and 400 random images I collected from Upsplash using their API (see guthub for image collection process).
+Let's begin by creating our dataset. I already have two folders that contain ~400 images of goldie and 400 random images collected from Upsplash using their API (see github for image collection process).
 
 Since I have all the images I want to use, I want to bring them in as arrays where each RGB value is recorded for each pixel for every images. I then want to assign the label 1 to all my Goldie images and 0 to all the random non-Goldie images. 
 
-I'm also going to crop every images so the aspect ratio is consistant (don't want the images to look stretched or squished) and divide each images into 128 by 128 pixels.
+I'm also going to crop every images so the aspect ratio is consistent (don't want the images to look stretched or squished) and divide each images into 128 by 128 pixels.
 
 
 ```python
