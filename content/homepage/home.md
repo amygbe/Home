@@ -12,3 +12,15 @@ Apart from my professional pursuits, I am also a competitive cyclist, avid hiker
 
 
 ![Cycling Photo](/images/bikepic.jpg)
+
+
+<div class="two-columns">
+  <div class="column">
+    <h2>Bikes</h2>
+    <p>I love biking and have explored various trails...</p>
+  </div>
+  <div class="column">
+    <h2>Hikes</h2>
+    <p>Hiking is another passion of mine. I've hiked in...</p>
+  </div>
+</div>

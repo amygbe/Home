@@ -495,11 +495,11 @@ body {
 
 /* post page specific styling */
 .homepage .home-content a[href*="posts"] {
-  color: #1c953c !important; /* Ensure posts page links have the same color */
+  color: #3d6a10 !important; /* Ensure posts page links have the same color */
 }
 
 /* hover effect for posts page link */
 .homepage .home-content a[href*="posts"]:hover {
-  color: #25ab7e !important;
+  color: #549315 !important;
 }
 
