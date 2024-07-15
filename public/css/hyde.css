@@ -474,12 +474,32 @@ body {
   width: 180px;
 }
 
-.custom-link {
-  color: #1E90FF; 
-  text-decoration: none; /* Remove underline */
+/* Link styling */
+
+
+/* Existing styles in hyde.css */
+
+/* Add your new rules at the bottom with increased specificity */
+
+/* General link styling */
+.homepage .home-content a {
+  color: #adc8e8 !important; /* Ensure the general link color takes precedence */
+  text-decoration: none;
 }
 
-.custom-link:hover {
-  color: #FF4500; 
+/* Link hover styling */
+.homepage .home-content a:hover {
+  color: #05a278 !important; /* Ensure the hover color takes precedence */
+  text-decoration: underline; /* Optional underline on hover */
+}
+
+/* post page specific styling */
+.homepage .home-content a[href*="posts"] {
+  color: #1c953c !important; /* Ensure posts page links have the same color */
+}
+
+/* hover effect for posts page link */
+.homepage .home-content a[href*="posts"]:hover {
+  color: #25ab7e !important;
 }
 
