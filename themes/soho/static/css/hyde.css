@@ -474,12 +474,10 @@ body {
   width: 180px;
 }
 
+/*******************/
 /* Link styling */
+/*******************/
 
-
-/* Existing styles in hyde.css */
-
-/* Add your new rules at the bottom with increased specificity */
 
 /* General link styling */
 .homepage .home-content a {
@@ -503,3 +501,16 @@ body {
   color: #549315 !important;
 }
 
+/*******************/
+/*Columns*/
+/*******************/
+
+/* Two columns layout */
+.two-columns {
+  display: flex;
+  gap: 20px; /* Adjust the gap as needed */
+}
+
+.column {
+  flex: 1;
+}
