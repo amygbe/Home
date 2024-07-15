@@ -481,7 +481,7 @@ body {
 
 /* General link styling */
 .homepage .home-content a {
-  color: #adc8e8 !important; /* Ensure the general link color takes precedence */
+  color: #087817 !important; /* Ensure the general link color takes precedence */
   text-decoration: none;
 }
 
@@ -493,24 +493,47 @@ body {
 
 /* post page specific styling */
 .homepage .home-content a[href*="posts"] {
-  color: #3d6a10 !important; /* Ensure posts page links have the same color */
+  color: #5ea11b !important; /* Ensure posts page links have the same color */
 }
 
 /* hover effect for posts page link */
 .homepage .home-content a[href*="posts"]:hover {
-  color: #549315 !important;
+  color: #05a278 !important;
 }
 
 /*******************/
 /*Columns*/
 /*******************/
 
-/* Two columns layout */
-.two-columns {
+/* Base styling for columns */
+.gdoc-columns {
   display: flex;
-  gap: 20px; /* Adjust the gap as needed */
+  flex-wrap: wrap;
+  gap: 1rem; /* Adjust the gap as needed */
 }
 
-.column {
-  flex: 1;
+.gdoc-columns__content {
+  flex: 1 1 calc(50% - 1rem); /* Each column takes up to 50% of the width minus the gap */
+  max-width: 50%; 
+  box-sizing: border-box;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+  .gdoc-columns {
+    flex-direction: column;
+  }
+  .gdoc-columns__content {
+    flex: 1 1 100%;
+    max-width: 100%; /* Ensure full width on mobile view */
+  }
+}
+
+
+hr.green {
+  border: none; /* Remove default border */
+  height: 1px; /* Height of the line */
+  background-color: #34704e; /* Line color */
+  margin: 2rem 0; /* Vertical spacing around the line */
+  width: 100%; /* Ensure the line spans the entire width */
 }

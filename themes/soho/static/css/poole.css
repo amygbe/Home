@@ -422,14 +422,3 @@ a.pagination-item:hover {
     border-bottom-right-radius: 4px;
   }
 }
-
-
-.two-columns {
-  display: flex;
-  gap: 20px; /* Adjust gap as needed */
-}
-
-.column {
-  flex: 1;
-  /* Add any additional styling for the columns here */
-}

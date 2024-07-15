@@ -1,0 +1,17 @@
+<div class="book-wrapper">
+    {{ range.Page.Params.bookshelf_item }}
+    <div class="book-items" >
+      <div class="main-book-wrap">
+        <div class="book-cover" onclick="location.href='{{ .cover_link | safeURL }}'">
+          <div class="book-inside"></div>
+          <div class="book-image">
+            <img src="{{ .cover_img }}" class="book-cover-img" />
+            <div class="effect"></div>
+            <div class="light"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+  
