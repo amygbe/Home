@@ -27,29 +27,3 @@
   {{- end }}
 </div>
 {{- end }}
-
-/* General link styling for all pages */
-body .content a,
-body .homepage .home-content a {
-  color: #087817 !important; /* Ensure the general link color takes precedence */
-  text-decoration: none;
-}
-
-/* Link hover styling for all pages */
-body .content a:hover,
-body .homepage .home-content a:hover {
-  color: #05a278 !important; /* Ensure the hover color takes precedence */
-  text-decoration: underline;
-}
-
-/* post page specific styling */
-body .content a[href*="posts"],
-body .homepage .home-content a[href*="posts"] {
-  color: #5ea11b !important; /* Ensure posts page links have the same color */
-}
-
-/* hover effect for posts page link */
-body .content a[href*="posts"]:hover,
-body .homepage .home-content a[href*="posts"]:hover {
-  color: #05a278 !important;
-}

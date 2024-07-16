@@ -403,7 +403,7 @@ ul.posts .post-preview {
 .read-more {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #ac8f5a;  
+  background-color: #d0b789;  
   color: #fff;
   text-decoration: none;
   border-radius: 15px;  /* Increase this value for more rounded corners */
@@ -411,7 +411,7 @@ ul.posts .post-preview {
 }
 
 .read-more:hover {
-  background-color: #7a986c;  
+  background-color: #eed7ab;  
 }
 
 .post-date {
@@ -477,29 +477,22 @@ body {
 /*******************/
 /* Link styling */
 /*******************/
-
-
-/* General link styling */
-.homepage .home-content a {
-  color: #087817 !important; /* Ensure the general link color takes precedence */
+/* General link styling for all pages */
+body .content a,
+body .homepage .home-content a {
+  color: #016126 !important; /* Ensure the general link color takes precedence */
   text-decoration: none;
 }
 
-/* Link hover styling */
-.homepage .home-content a:hover {
-  color: #05a278 !important; /* Ensure the hover color takes precedence */
-  text-decoration: underline; /* Optional underline on hover */
+/* Link hover styling for all pages */
+body .content a:hover,
+body .homepage .home-content a:hover {
+  color: #08a745 !important; /* Ensure the hover color takes precedence */
+  text-decoration: none;
 }
 
-/* post page specific styling */
-.homepage .home-content a[href*="posts"] {
-  color: #5ea11b !important; /* Ensure posts page links have the same color */
-}
 
-/* hover effect for posts page link */
-.homepage .home-content a[href*="posts"]:hover {
-  color: #05a278 !important;
-}
+
 
 /*******************/
 /*Columns*/

@@ -37,7 +37,6 @@
     <meta property="article:modified_time" content="2024-06-28T00:00:00+00:00">
     <meta property="article:tag" content="Logistic Regression">
     <meta property="article:tag" content="Python">
-      <meta property="og:see_also" content="http://localhost:1313/about/goldie_v_world/">
 
 
 
@@ -177,6 +176,7 @@
 
   
   <link type="text/css" rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/custom.css"><link type="text/css" rel="stylesheet" href="/css/syntax.css">
   <link rel="stylesheet" href="/css/custom.css">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
@@ -240,12 +240,12 @@
   <h1 class="title">Logistic Regression: Goldie Versus The World</h1>
   
 
-  
   <div class="post-date">
     <time datetime="2024-06-28T00:00:00Z">Jun 28, 2024</time> <span class="readtime">&middot; 9 min read</span>
   </div>
+
   <div>
-    <p>As I&rsquo;ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie. I have hundreds of photos of Goldie on my phone, surely enough to train a model and do some binary classification with. Without further ado, let&rsquo;s get into it!</p>
+  <p>As I&rsquo;ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie. I have hundreds of photos of Goldie on my phone, surely enough to train a model and do some binary classification with. Without further ado, let&rsquo;s get into it!</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Load packages</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">proj_fcns</span> <span class="kn">import</span> <span class="n">sigmoid</span><span class="p">,</span> <span class="n">initialize_parameters</span><span class="p">,</span> <span class="n">plot_costs</span>
@@ -534,7 +534,6 @@ is used to map the values between 0 and 1 so the results can be interpreted as a
 <p><img src="/images/cost_over_iterations.png" alt="costs_graph"></p>
 
   </div>
-  
 
   
 <div>
