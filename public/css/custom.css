@@ -114,3 +114,158 @@
       margin-left: 14px;
   }
   
+
+
+  .projects, .posts {
+    margin-top: 2em;
+  }
+  
+  .projects h2, .posts h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+  
+  .project-card, .post-preview {
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 15px;
+    background-color: #fde9c0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .project-content, .post-content {
+    flex: 1;
+    padding-right: 1em;
+  }
+  
+  .project-card h3, .post-preview h2 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+  
+  .project-card p, .post-preview p {
+    color: #666;
+  }
+  
+  .project-image, .post-image {
+    width: 30%;
+  }
+  
+  .project-image img, .post-image img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .read-more-link {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+  }
+  
+  .read-more-link a {
+    color: #087817; /*087817*/
+    text-decoration: none;
+  }
+  
+  .read-more-link a:hover {
+    color: #087817;
+    text-decoration: underline;
+  }
+  
+  .read-more-link .post-date {
+    margin-left: 10px; /* Add space between Read More button and date */
+  }
+  
+  .read-more {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #d0b789;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 15px;
+    margin-right: 10px;
+  }
+  
+  .read-more:hover {
+    background-color: #eed7ab !important; /* Ensure the hover color takes precedence */
+    color: #087817 !important; /* Ensure the text color on hover takes precedence */
+  }
+  
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .post-footer .post-date {
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: #757575;
+    margin-left: 10px;
+  }
+
+/*****************/
+/* Dividing Line */
+/*****************/
+
+hr.green {
+  border: none; /* Remove default border */
+  height: 2px; /* Height of the line */
+  background-color: #34704e; /* Line color */
+  margin: 2rem 0; /* Vertical spacing around the line */
+  width: 100%; /* Ensure the line spans the entire width */
+}
+
+/*****************/
+/* About Card */
+/*****************/
+/***********************************/
+/* Style for the about card */
+/***********************************/
+.about-card {
+  background-color: #fde9c0;
+  padding: 1em;
+  border-radius: 15px;
+  margin-bottom: 1em;
+}
+
+.about-card h3 a {
+  color: #087817;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.8em; /* Increase the font size for the heading */
+  margin: 0; /* Remove any default margin */
+  padding-top: 0.05em; /* Adjust padding to control space above the title */
+}
+
+.about-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.about-card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.about-card-image {
+  flex: 3; /* Increase the flex to make the image take up more space */
+  padding-right: 1em;
+}
+
+.about-card-image img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.about-card-text {
+  flex: 2; /* Adjust flex to shift main text to the right */
+}
+
+.about-card-text p {
+  color: #666;
+  margin: 0;
+}

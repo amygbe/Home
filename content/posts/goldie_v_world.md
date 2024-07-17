@@ -4,6 +4,7 @@ author = "Amy Bell"
 title = "Logistic Regression: Goldie Versus The World"
 date = "2024-06-28"
 description = "Article demonstrating Goldie."
+summary = "As I’ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie."
 tags = ["logistic regression", "python"]
 categories = ["themes", "syntax"]
 series = ["Themes Guide"]

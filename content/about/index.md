@@ -12,11 +12,9 @@ bookshelf_item = [
   { cover_img = "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1664458703i/32620332.jpg", cover_link = "https://goodreads.com/book/show/32620332-the-seven-husbands-of-evelyn-hugo" }
 ]
 +++
-# Hi, I'm Amy!
+# More About Me
 
-I'm a data scientist who is a big fan of predictive modeling and data viz. I currently work mainly in Python to build podium probabilities and other interesting predictions for Canadian Olympic teams! I'm also learning a lot about Bayesian stats by taking Richard McElreath's course "Statistical Rethinking" in R and exploring some deep learning with Andrew Ng's Coursera courses. 
-
-Check out my [posts page](https://www.amybell.info/posts/) to see what I've been working on!
+Thanks for taking a look at this page! Below are some of my favourtie things and some of my favourite books
 
 {{< greenhr >}}
 

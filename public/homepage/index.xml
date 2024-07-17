@@ -12,7 +12,7 @@
       <link>http://localhost:1313/homepage/home/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/homepage/home/</guid>
-      <description>About Me Hi, I’m Amy! I am a data scientist who is a big fan of predictive modeling and data viz.</description>
+      <description>Hi, I&amp;rsquo;m Amy I&amp;rsquo;m a data scientist who is a big fan of predictive modeling and data viz.</description>
     </item>
   </channel>
 </rss>

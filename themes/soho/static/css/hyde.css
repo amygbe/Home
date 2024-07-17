@@ -356,76 +356,6 @@ figcaption {
   white-space: nowrap;
 }
 
-ul.posts .post-preview h2 {
-  margin-top: 0;
-}
-
-ul.posts .post-preview .post-content-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-ul.posts .post-preview .post-content {
-  flex: 1;
-}
-
-ul.posts .post-preview .post-image {
-  width: 200px; /* Adjust the width as needed */
-  height: auto;
-  margin-left: 20px; /* Space between the text and the image */
-  border-radius: 5px; /* Optional: adds rounded corners */
-  object-fit: cover; /* Ensures the image covers the area */
-}
-
-
-.post-preview h2 {
-  margin-top: 0;
-}
-
-ul.posts .post-preview {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-  padding: 20px;
-  border: 2px solid rgb(162, 163, 123);  /* This adds the border outline */
-  border-radius: 15px;
-}
-
-.post-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-
-.read-more {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #d0b789;  
-  color: #fff;
-  text-decoration: none;
-  border-radius: 15px;  /* Increase this value for more rounded corners */
-  margin-right: 10px; /* Add some space between the button and the date */
-}
-
-.read-more:hover {
-  background-color: #eed7ab;  
-}
-
-.post-date {
-  white-space: nowrap;
-  font-size: 0.9em;
-  color: #757575;
-}
-
-.post-footer .post-date {
-  white-space: nowrap;
-  font-size: 0.7em; /* Reduce font size */
-  color: #757575;
-  margin-left: 10px; /* Add some space between the button and the date */
-}
 
 /*****************************/
 /* CHANGING SITE COLOURS!!!! */
@@ -434,12 +364,12 @@ ul.posts .post-preview {
 
 /* Update the body background color to manilla */
 body {
-  background-color: #F5DEB3 !important; /* Manilla color */
+  background-color: #F5DEB3 !important; 
 }
 
 /* Ensure the main content area has the same background color */
 .main-content {
-  background-color: #F5DEB3 !important; /* Manilla color */
+  background-color: #F5DEB3 !important; 
 }
 
 /* Ensure the sidebar remains green */
@@ -448,28 +378,27 @@ body {
   color: #fff;
 }
 
-
 /* Change sidebar links and heading colors to manilla */
 .sidebar a,
 .sidebar-about h1,
 .sidebar-about h2 {
-  color: #F5DEB3 !important; /* Manilla color */
+  color: #F5DEB3 !important; 
 }
 
 /* Update other sidebar elements to have manilla text color */
 .sidebar nav li,
 .sidebar nav a {
-  color: #F5DEB3 !important; /* Manilla color */
+  color: #F5DEB3 !important; 
 }
 
-/* Target the "Data Scientist" text specifically */
+/* Target "Data Scientist" */
 .sidebar-about p {
-  color: #F5DEB3 !important; /* Manilla color */
+  color: #F5DEB3 !important; 
 }
 
 /* Update the border color of the circle image */
 .img-headshot {
-  border: 6px solid #F5DEB3 !important; /* Manilla color */
+  border: 6px solid #F5DEB3 !important; 
   height: 180px;
   width: 180px;
 }
@@ -490,8 +419,6 @@ body .homepage .home-content a:hover {
   color: #08a745 !important; /* Ensure the hover color takes precedence */
   text-decoration: none;
 }
-
-
 
 
 /*******************/
