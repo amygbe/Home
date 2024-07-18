@@ -114,7 +114,8 @@
       margin-left: 14px;
   }
   
-
+/***************************/
+/* post and project styling*/
 
   .projects, .posts {
     margin-top: 2em;
@@ -219,15 +220,12 @@ hr.green {
   width: 100%; /* Ensure the line spans the entire width */
 }
 
-/*****************/
-/* About Card */
-/*****************/
 /***********************************/
 /* Style for the about card */
 /***********************************/
 .about-card {
-  background-color: #fde9c0;
-  padding: 1em;
+  background-color: #f8e8c5;
+  padding: 0em;
   border-radius: 15px;
   margin-bottom: 1em;
 }
@@ -236,9 +234,10 @@ hr.green {
   color: #087817;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1.8em; /* Increase the font size for the heading */
-  margin: 0; /* Remove any default margin */
-  padding-top: 0.05em; /* Adjust padding to control space above the title */
+  font-size: 2.2em; /* Increase the font size for the heading */
+  margin: 0; 
+  padding-top: 0; 
+  padding-left: 0.5em;
 }
 
 .about-card h3 a:hover {
@@ -252,20 +251,106 @@ hr.green {
 }
 
 .about-card-image {
-  flex: 3; /* Increase the flex to make the image take up more space */
+  flex: 7; /* Increase the flex to make the image take up more space */
   padding-right: 1em;
+  padding-left: 1em;
 }
 
 .about-card-image img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .about-card-text {
   flex: 2; /* Adjust flex to shift main text to the right */
+  padding-left: 0.5;
 }
 
 .about-card-text p {
   color: #666;
   margin: 0;
+}
+
+
+/***********************************/
+/* Style for the video game tier list */
+/***********************************/
+.tierlist-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.tier-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch; /* Make sure tier labels stretch to match the game rows */
+  gap: 1em;
+  padding: 10px;
+  background-color: #d3bf9f; 
+  border-radius: 7px; 
+}
+
+.tier-label {
+  font-size: 2em;
+  font-weight: bold;
+  width: 80px !important; /* Fixed width */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background-color: #f8e9c9;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+/* styles for S tier */
+.tier-s .tier-label {
+  background-color: #f77b7b;
+  color: rgb(0, 0, 0);
+}
+
+/* styles for A tier */
+.tier-a .tier-label {
+  background-color: #fca859; 
+  color: black;
+}
+
+.tier-games {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.game-case {
+  position: relative;
+  width: 100px; /* Match tier label size */
+  height: 100px; /* Match tier label size */
+  cursor: pointer;
+}
+
+.game-cover {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.game-image {
+  width: 100px; /* Manually set image size */
+  height: 100px; /* Manually set image size */
+  position: relative;
+  border-radius: 7px;
+  overflow: hidden;
+  transform: rotateY(-15deg);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.game-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-image:hover {
+  transform: rotateY(0deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }

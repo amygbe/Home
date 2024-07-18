@@ -16,13 +16,39 @@ bookshelf_item = [
 
 I'm a data scientist who is a big fan of predictive modeling and data viz. I currently work mainly in Python to build podium probabilities and other interesting predictions for Canadian Olympic teams! I'm also learning a lot about Bayesian stats by taking Richard McElreath's course "Statistical Rethinking" in R and exploring some deep learning with Andrew Ng's Coursera courses. 
 
+[Click anywhere around here to view my full resume!](files/amy_resume.pdf) 
+
 {{< greenhr >}}
 
 # Read About my Projects
 
+You can find the repos for these projects [on my github](https://github.com/amygbe)
 {{< projectcards >}}
 
 {{< greenhr >}}
 
+{{< columns size="large" >}}
+### Work Highlights
+
+These are a few of my favourite topics I've worked on:
+- monte carlo simulations
+- Olympics podium pathways
+- webscraping
+- gradient boosted trees
+
+<--->
+
+### Current studies and interests
+- Statistical rethinking, Richard McElreath
+- Deep learning specialization course, Andrew Ng
+- Predictive modelling
+- Bayesian stats
+- data visualization
+
+{{< /columns >}}
+
+{{< greenhr >}}
+
 {{< about-card >}}
+
 
