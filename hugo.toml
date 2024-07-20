@@ -57,6 +57,12 @@ customJs = ["js/blog.js"]
   weight = 300
   url = "/about/"
 
+  [[menu.main]]
+  name = "Contact Me"
+  identifier = "contact"
+  weight = 300
+  url = "/contact/"
+
 [taxonomies]
   category = "categories"
   series = "series"
