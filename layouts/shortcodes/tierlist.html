@@ -4,7 +4,7 @@
       <div class="tier-label">{{ .tier }}</div>
       <div class="tier-games">
         {{ range .games }}
-        <div class="game-case" onclick="location.href='{{ .link | safeURL }}'">
+        <div class="game-case">
           <div class="game-cover">
             <div class="game-image">
               <img src="{{ .img }}" alt="{{ .title }}">

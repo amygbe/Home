@@ -1,4 +1,103 @@
 
+/*****************************/
+/* CHANGING SITE COLOURS!!!! */
+/*****************************/
+
+
+/* Update the body background color to manilla */
+body {
+  background-color: #F5DEB3 !important; 
+}
+
+/* Ensure the main content area has the same background color */
+.main-content {
+  background-color: #F5DEB3 !important; 
+}
+
+/* Ensure the sidebar remains green */
+.sidebar {
+  background-color: #2f523e !important;
+  color: #fff;
+}
+
+/* Change sidebar links and heading colors to manilla */
+.sidebar a,
+.sidebar-about h1,
+.sidebar-about h2 {
+  color: #F5DEB3 !important; 
+}
+
+/* Update other sidebar elements to have manilla text color */
+.sidebar nav li,
+.sidebar nav a {
+  color: #F5DEB3 !important; 
+}
+
+/* Target "Data Scientist" */
+.sidebar-about p {
+  color: #F5DEB3 !important; 
+}
+
+/* Update the border color of the circle image */
+.img-headshot {
+  border: 6px solid #F5DEB3 !important; 
+  height: 180px;
+  width: 180px;
+}
+
+/*******************/
+/* Link styling */
+/*******************/
+/* General link styling for all pages */
+body .content a,
+body .homepage .home-content a {
+  color: #016126 !important; /* Ensure the general link color takes precedence */
+  text-decoration: none;
+  
+}
+
+/* Link hover styling for all pages */
+body .content a:hover,
+body .homepage .home-content a:hover {
+  color: #049735 !important; /* Ensure the hover color takes precedence */
+  text-decoration: none;
+}
+
+
+/*******************/
+/*Columns*/
+/*******************/
+
+/* Base styling for columns */
+.gdoc-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Adjust the gap as needed */
+}
+
+.gdoc-columns__content {
+  flex: 1 1 calc(50% - 1rem); /* Each column takes up to 50% of the width minus the gap */
+  max-width: 50%; 
+  box-sizing: border-box;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+  .gdoc-columns {
+    flex-direction: column;
+  }
+  .gdoc-columns__content {
+    flex: 1 1 100%;
+    max-width: 100%; /* Ensure full width on mobile view */
+  }
+}
+
+
+/*******************/
+/*Bookshelf styling*/
+/*******************/
+
+
 .book-wrapper {
     width: 100%;
     position: relative;
@@ -180,17 +279,19 @@
   }
   
   .read-more {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #d0b789;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 15px;
-    margin-right: 10px;
+   display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #ead09f;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
   }
   
   .read-more:hover {
-    background-color: #eed7ab !important; /* Ensure the hover color takes precedence */
+    background-color: #e2c48b !important; /* Ensure the hover color takes precedence */
     color: #087817 !important; /* Ensure the text color on hover takes precedence */
   }
   
@@ -418,4 +519,23 @@ hr.green {
 .contact-form textarea {
   resize: vertical !important; 
   min-height: 100px !important;
+}
+
+/***********************************/
+/* Style for button short code */
+/***********************************/
+.rounded-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #ead09f;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+  background-color: #e2c48b;
 }

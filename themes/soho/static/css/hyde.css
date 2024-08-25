@@ -411,12 +411,13 @@ body .content a,
 body .homepage .home-content a {
   color: #016126 !important; /* Ensure the general link color takes precedence */
   text-decoration: none;
+  
 }
 
 /* Link hover styling for all pages */
 body .content a:hover,
 body .homepage .home-content a:hover {
-  color: #08a745 !important; /* Ensure the hover color takes precedence */
+  color: #0a9a3c !important; /* Ensure the hover color takes precedence */
   text-decoration: none;
 }
 

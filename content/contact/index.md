@@ -6,4 +6,3 @@ layout = "single"
 
 {{< contact >}}
 
-{{< greenhr >}}
