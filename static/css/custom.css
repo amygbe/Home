@@ -2,7 +2,13 @@
 /*****************************/
 /* CHANGING SITE COLOURS!!!! */
 /*****************************/
-
+:root {
+  --green-color: #2f523e; 
+  --color-hover: #F5DEB3; 
+  --button-text-color: #2f523e; 
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+}
 
 /* Update the body background color to manilla */
 body {
@@ -48,18 +54,17 @@ body {
 /*******************/
 /* Link styling */
 /*******************/
-/* General link styling for all pages */
+/* General link styling */
 body .content a,
 body .homepage .home-content a {
-  color: #016126 !important; /* Ensure the general link color takes precedence */
+  color: #016126; /* Ensure the general link color takes precedence */
   text-decoration: none;
-  
 }
 
 /* Link hover styling for all pages */
 body .content a:hover,
 body .homepage .home-content a:hover {
-  color: #049735 !important; /* Ensure the hover color takes precedence */
+  color: #049735; /* Ensure the hover color takes precedence */
   text-decoration: none;
 }
 
@@ -538,4 +543,87 @@ hr.green {
 
 .rounded-button:hover {
   background-color: #e2c48b;
+}
+ 
+/*******************
+gooey button style
+********************/
+
+
+/* Override link styling inside buttons */
+.c-button,
+.c-button a {
+  color: var(--button-text-color) !important; /* Ensure button text color is applied */
+  text-decoration: none !important; /* Remove any underline from links inside buttons */
+}
+
+/* Button-specific styling */
+.c-button--gooey {
+  color: var(--button-text-color) !important; /* Default text color */
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 2px solid var(--green-color);
+  border-radius: 25px; /* Rounded corners */
+  padding: 0.1em 0.1em;
+  position: relative;
+  transition: all 700ms ease;
+  overflow: hidden; /* Prevent gooey animation overflow */
+}
+
+.c-button--gooey:hover {
+  color: var(--color-hover) !important; /* Change text color to manilla on hover */
+  border-color: var(--green-color); /* Keep border color on hover */
+}
+
+.c-button {
+  color: var(--button-text-color) !important; /* Override general link color */
+  font-weight: 600;
+  font-size: 0.8em;
+  text-decoration: none !important;
+  padding: 0.4em 1.0em;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Blobs and Gooey Effect */
+.c-button--gooey .c-button__blobs {
+  height: 100%;
+  filter: url(#goo);
+  overflow: hidden; /* Ensure blobs don't overflow outside the button */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: -3px;
+  right: -1px;
+  z-index: -1;
+}
+
+.c-button--gooey .c-button__blobs div {
+  background-color: var(--green-color);
+  width: 30%;
+  height: 100%;
+  border-radius: 100%;
+  position: absolute;
+  transform: scale(1.4) translateY(125%) translateZ(0);
+  transition: all 700ms ease;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(1) {
+  left: -5%;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(2) {
+  left: 30%;
+  transition-delay: 60ms;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(3) {
+  left: 66%;
+  transition-delay: 25ms;
+}
+
+.c-button--gooey:hover .c-button__blobs div {
+  transform: scale(1.4) translateY(0) translateZ(0);
 }

@@ -199,12 +199,33 @@
       
         <h1 id="hi-im-amy">Hi, I&rsquo;m Amy!</h1>
 <p>I&rsquo;m a data scientist who is a big fan of predictive modeling and data viz. I currently work mainly in Python to build podium probabilities and other interesting predictions for Canadian Olympic teams! I&rsquo;m also learning a lot about Bayesian stats by taking Richard McElreath&rsquo;s course &ldquo;Statistical Rethinking&rdquo; in R and exploring some deep learning with Andrew Ng&rsquo;s Coursera courses.</p>
-<a href="/files/amy_resume.pdf" class="rounded-button">
-    Download My Resume
-</a>
-
+<p><div class="row middle-on-small center-on-small">
+    <div class="column small-12 medium-6 large-4">
+      <a href="/files/amy_resume.pdf" class="c-button c-button--gooey">
+        Download My Resume
+        <div class="c-button__blobs">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </a>
+      
+      <p class="pen-info"></p>
+    </div>
+  </div>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
+      <defs>
+          <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
+              <feBlend in="SourceGraphic" in2="goo"></feBlend>
+          </filter>
+      </defs>
+  </svg>
+  
 <hr class="green">
-
+</p>
 <h1 id="read-about-my-projects">Read About my Projects</h1>
 <p>You can find the repos for these projects <a href="https://github.com/amygbe">on my github</a>
 <section class="projects">
