@@ -1111,6 +1111,10 @@ gooey button style
   height: 1.1em;
 }
 
+.puzzle-difficulty .difficulty-stars {
+  font-size: 0.9rem;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .puzzle-container {
@@ -1143,5 +1147,15 @@ gooey button style
   .congrats-content {
     margin: 1em;
     padding: 2em;
+  }
+
+  .puzzle-difficulty .star {
+    width: 0.9em;
+    height: 0.9em;
+  }
+
+  .puzzle-list-meta .star {
+    width: 0.85em;
+    height: 0.85em;
   }
 }
