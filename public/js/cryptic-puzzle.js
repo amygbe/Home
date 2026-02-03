@@ -233,8 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Check button
   if (checkBtn) {
-    checkBtn.addEventListener('click', checkAnswer);
-    checkBtn.addEventListener('touchend', function(e) {
+    checkBtn.addEventListener('click', function(e) {
       e.preventDefault();
       checkAnswer();
     });
@@ -251,8 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (hintsBtn && hintsPanel) {
-    hintsBtn.addEventListener('click', toggleHints);
-    hintsBtn.addEventListener('touchend', function(e) {
+    hintsBtn.addEventListener('click', function(e) {
       e.preventDefault();
       toggleHints();
     });

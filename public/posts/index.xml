@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Amy Bell</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://www.amybell.info/posts/</link>
     <description>Recent content in Posts on Amy Bell</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Fri, 28 Jun 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.amybell.info/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Logistic Regression: Goldie Versus The World</title>
-      <link>http://localhost:1313/posts/goldie_v_world/</link>
+      <link>https://www.amybell.info/posts/goldie_v_world/</link>
       <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/goldie_v_world/</guid>
+      <guid>https://www.amybell.info/posts/goldie_v_world/</guid>
       <description>As I’ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie.</description>
     </item>
     <item>
       <title>Making my site with HUGO</title>
-      <link>http://localhost:1313/posts/hugo_post/</link>
+      <link>https://www.amybell.info/posts/hugo_post/</link>
       <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/hugo_post/</guid>
+      <guid>https://www.amybell.info/posts/hugo_post/</guid>
       <description>Here&amp;rsquo;s a bit of info about how I made my first ever website with zero prior experience.</description>
     </item>
   </channel>

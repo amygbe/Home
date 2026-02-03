@@ -1,12 +1,14 @@
 <section class="projects">
   {{ range first 3 (where .Site.RegularPages "Type" "posts") }}
   <a href="{{ .RelPermalink }}" class="project-card card-link">
-    <div class="project-content">
-      <h3 class="post-title">{{ .Title }}</h3>
-      <p>{{ .Summary }}</p>
-    </div>
-    <div class="project-image">
-      <img src="{{ with .Params.image }}{{ . }}{{ else }}/images/default-project.jpg{{ end }}" alt="{{ .Title }}">
+    <h3 class="project-title">{{ .Title }}</h3>
+    <div class="project-body">
+      <div class="project-image">
+        <img src="{{ with .Params.image }}{{ . }}{{ else }}/images/default-project.jpg{{ end }}" alt="{{ .Title }}">
+      </div>
+      <div class="project-content">
+        <p>{{ .Summary }}</p>
+      </div>
     </div>
   </a>
   {{ end }}

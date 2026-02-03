@@ -2,45 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Amy Bell</title>
-    <link>http://localhost:1313/</link>
+    <link>https://www.amybell.info/</link>
     <description>Recent content on Amy Bell</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 28 Jun 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.amybell.info/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cryptic Puzzle #2</title>
+      <link>https://www.amybell.info/puzzles/puzzle-002/</link>
+      <pubDate>Mon, 02 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.amybell.info/puzzles/puzzle-002/</guid>
+      <description>An array of directionless sweaters inside a mix (6)</description>
+    </item>
+    <item>
+      <title>Cryptic Puzzle #1</title>
+      <link>https://www.amybell.info/puzzles/puzzle-001/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.amybell.info/puzzles/puzzle-001/</guid>
+      <description>We hear prohibited musical group (4)&#xA;0 solved hints check ○ Fodder prohibited, musical group ○ Definition &amp;#39;Musical group&amp;#39; is the definition ○ Indicators &amp;#39;We hear&amp;#39; indicates a homophone - the answer sounds like another word Congrats!</description>
+    </item>
     <item>
       <title>Logistic Regression: Goldie Versus The World</title>
-      <link>http://localhost:1313/posts/goldie_v_world/</link>
+      <link>https://www.amybell.info/posts/goldie_v_world/</link>
       <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/goldie_v_world/</guid>
+      <guid>https://www.amybell.info/posts/goldie_v_world/</guid>
       <description>As I’ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie.</description>
     </item>
     <item>
       <title>Making my site with HUGO</title>
-      <link>http://localhost:1313/posts/hugo_post/</link>
+      <link>https://www.amybell.info/posts/hugo_post/</link>
       <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/hugo_post/</guid>
+      <guid>https://www.amybell.info/posts/hugo_post/</guid>
       <description>Here&amp;rsquo;s a bit of info about how I made my first ever website with zero prior experience.</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://www.amybell.info/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://www.amybell.info/about/</guid>
       <description>More About Me Thanks for taking a look at this page!</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/contact/</link>
+      <link>https://www.amybell.info/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/contact/</guid>
+      <guid>https://www.amybell.info/contact/</guid>
       <description>Send me a message! Your Name: Your Email: Your Message: Send </description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/homepage/home/</link>
+      <link>https://www.amybell.info/homepage/home/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/homepage/home/</guid>
+      <guid>https://www.amybell.info/homepage/home/</guid>
       <description>Hi, I&amp;rsquo;m Amy! I&amp;rsquo;m a data scientist who is a big fan of predictive modeling and data viz.</description>
     </item>
   </channel>

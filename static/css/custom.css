@@ -231,13 +231,22 @@ body .homepage .home-content a:hover {
   }
   
   .project-card, .post-preview {
+    display: block;
     padding: 1em;
     margin-bottom: 1em;
     border-radius: 15px;
     background-color: #fde9c0;
+  }
+
+  .project-title {
+    margin: 0 0 0.75em 0;
+    color: #087817;
+  }
+
+  .project-body {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
   }
 
   /* Clickable project cards */
@@ -253,10 +262,10 @@ body .homepage .home-content a:hover {
 
   .project-content, .post-content {
     flex: 1;
-    padding-right: 1em;
+    padding-left: 1em;
   }
 
-  .project-card h3, .post-preview h2 {
+  .post-preview h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
     color: #087817;
@@ -267,7 +276,8 @@ body .homepage .home-content a:hover {
   }
   
   .project-image, .post-image {
-    width: 30%;
+    width: 35%;
+    flex-shrink: 0;
   }
   
   .project-image img, .post-image img {
@@ -710,6 +720,7 @@ gooey button style
 /* Puzzle page - sage green background */
 .puzzle-page {
   background-color: #C8D5B9;
+  border-radius: 16px;
   padding: 1.5em;
   margin: -20px;
   margin-top: 0;
@@ -825,6 +836,11 @@ gooey button style
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 44px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .puzzle-btn-filled {
