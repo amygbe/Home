@@ -1,5 +1,5 @@
 +++
-title = "Cryptic Puzzle #2"
+title = "Amy's Cryptic #2 - An array of directionless sweaters inside a mix"
 date = "2026-02-02"
 description = "A cryptic clue to solve"
 

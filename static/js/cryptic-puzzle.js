@@ -286,42 +286,29 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hintsBtn) hintsBtn.disabled = true;
   }
 
-  // Fallback copy function for mobile
-  function copyToClipboard(text) {
-    // Try modern clipboard API first
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text).then(function() {
-        return true;
-      }).catch(function() {
-        return fallbackCopy(text);
-      });
-    }
-    return Promise.resolve(fallbackCopy(text));
-  }
-
-  function fallbackCopy(text) {
+  // Copy to clipboard - works on mobile by trying execCommand first (synchronous)
+  function copyToClipboard(text, callback) {
+    // Try execCommand first - more reliable on mobile within user gesture
     var textArea = document.createElement('textarea');
     textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.top = '0';
-    textArea.style.left = '0';
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = '0';
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-    textArea.setAttribute('readonly', '');
+    textArea.contentEditable = 'true';
+    textArea.readOnly = false;
+    textArea.style.cssText = 'position:fixed;top:0;left:0;width:2em;height:2em;padding:0;border:none;outline:none;box-shadow:none;background:transparent;-webkit-user-select:text;user-select:text;';
     document.body.appendChild(textArea);
 
-    // iOS specific handling
-    var range = document.createRange();
-    range.selectNodeContents(textArea);
-    var selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    textArea.setSelectionRange(0, 999999);
+    // iOS needs special handling
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (isIOS) {
+      var range = document.createRange();
+      range.selectNodeContents(textArea);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      textArea.setSelectionRange(0, 999999);
+    } else {
+      textArea.focus();
+      textArea.select();
+    }
 
     var success = false;
     try {
@@ -330,30 +317,33 @@ document.addEventListener('DOMContentLoaded', function() {
       success = false;
     }
     document.body.removeChild(textArea);
-    return success;
+
+    // If execCommand failed and clipboard API available, try that
+    if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        callback(true);
+      }).catch(function() {
+        callback(false);
+      });
+    } else {
+      callback(success);
+    }
   }
 
   // Share result
   if (shareBtn) {
     shareBtn.addEventListener('click', function() {
-      var puzzleTitle = congratsPopup.dataset.puzzleTitle || 'Cryptic Puzzle';
-      // Convert "Cryptic Puzzle #1" to "Amy's Cryptic #1"
-      var shareTitle = puzzleTitle.replace('Cryptic Puzzle', "Amy's Cryptic");
-
-      // Get the clue text
-      var clueEl = document.querySelector('.puzzle-clue');
-      var clueText = clueEl ? clueEl.textContent.trim() : '';
+      var puzzleTitle = congratsPopup.dataset.puzzleTitle || "Amy's Cryptic";
 
       var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
       var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
 
-      var shareText = shareTitle + '\n';
-      shareText += '"' + clueText + '"\n';
+      var shareText = puzzleTitle + '\n';
       shareText += 'Solved with ' + hintText + ' and ' + guessText + '.\n';
       shareText += 'wow that\'s really amazing!\n\n';
       shareText += window.location.href;
 
-      copyToClipboard(shareText).then(function(success) {
+      copyToClipboard(shareText, function(success) {
         if (success) {
           shareCopied.style.display = 'block';
           setTimeout(function() {
