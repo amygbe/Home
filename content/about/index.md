@@ -57,15 +57,15 @@ I've been into bike racing since 2013 and have won a few races over the years!
 - 12x National medals
 - 24x Provincial medals
 
-These days, I spend a lot of time lifting, xc skiing, biathlon shooting, climbing, and learning new skills (most recently and notable: handstand walks and muscle ups)
+These days, I spend a lot of time lifting, skiing, climbing, and learning new skills (most recently and notably: handstand walks and muscle ups)
 <--->
 ### Hike stuff
-I am a **HUGE** fan of Hiking! These are some of my favourite hikes, mostly in the PNW (my favourite are on earth I think): 
+I am a **HUGE** fan of Hiking! These are some of my favourite hikes: 
 
-[Wedgemount Lake](https://www.alltrails.com/trail/canada/british-columbia/wedgemount-lake-and-tupper-lake) - Garibaldi, BC \
-[Grotto Mountain](https://www.alltrails.com/trail/canada/alberta/grotto-mountain-trail) - Canmore, AB \
+[The Enchantments traverse](https://www.alltrails.com/trail/us/washington/the-enchantments-trail) - Leavenworth, WA \
 [Cascade Pass and Sahale Arm](https://www.alltrails.com/trail/us/washington/cascade-pass-and-sahale-arm-trail--2) - North Cascades, WA \
-[Rampart Lakes](https://www.alltrails.com/trail/us/washington/rampart-lakes-and-alta-mountain) - Snoqualamie, WA \
+[Wedgemount Lake](https://www.alltrails.com/trail/canada/british-columbia/wedgemount-lake-and-tupper-lake) - Garibaldi, BC \
+[Rampart Lakes and Alta Mountain](https://www.alltrails.com/trail/us/washington/rampart-lakes-and-alta-mountain) - Snoqualamie, WA \
 [Mount St. Piran](https://www.alltrails.com/trail/canada/alberta/mount-st-piran) - Banff, AB \
 [Dragon Lake](https://www.alltrails.com/trail/greece/epirus--3/drakolimni-of-tymfi) - Epirus, Greece 
 
@@ -85,6 +85,10 @@ These are my top 8 books at the moment, feel free to send me some recs!
 This is **not** an exhaustive tier list but it still highlights some of my all time favourite games! I've only added tier S and A because realistically who cares about games I don't love.
 
 {{< tierlist  >}}
+
+{{< greenhr >}}
+
+{{< puzzle-card >}}
 
 {{< greenhr >}}
 

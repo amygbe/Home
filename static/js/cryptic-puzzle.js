@@ -41,10 +41,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var wrongMessages = [
     "Try again!",
-    "Not quite...",
+    "Not quite!",
     "Keep trying!",
-    "Almost there?",
-    "Better luck next time!"
+    "Almost there!",
+    "Better luck next time!",
+    "I believe in you!",
+    "How did you even get that?",
+    "not sure about that one...",
+    "What lol",
+    "cmonnnnn",
+    "It's not that hard",
   ];
 
   // Letter box navigation
@@ -325,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var shareText = shareTitle + '\n';
       shareText += 'Solved with ' + hintText + ' and ' + guessText + '.\n';
-      shareText += 'Also please refer Amy for a job!!!\n\n';
+      shareText += 'wow that\'s really amazing!\n\n';
       shareText += window.location.href;
 
       copyToClipboard(shareText).then(function(success) {
