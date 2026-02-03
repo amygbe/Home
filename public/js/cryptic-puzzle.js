@@ -286,47 +286,47 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hintsBtn) hintsBtn.disabled = true;
   }
 
-  // Copy to clipboard - works on mobile by trying execCommand first (synchronous)
-  function copyToClipboard(text, callback) {
-    // Try execCommand first - more reliable on mobile within user gesture
-    var textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.contentEditable = 'true';
-    textArea.readOnly = false;
-    textArea.style.cssText = 'position:fixed;top:0;left:0;width:2em;height:2em;padding:0;border:none;outline:none;box-shadow:none;background:transparent;-webkit-user-select:text;user-select:text;';
-    document.body.appendChild(textArea);
-
-    // iOS needs special handling
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (isIOS) {
-      var range = document.createRange();
-      range.selectNodeContents(textArea);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      textArea.setSelectionRange(0, 999999);
-    } else {
-      textArea.focus();
-      textArea.select();
+  // Share or copy text - uses native share on mobile, clipboard on desktop
+  function shareOrCopy(text, title, callback) {
+    // Try Web Share API first (works great on mobile)
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: text
+      }).then(function() {
+        callback(true, 'shared');
+      }).catch(function(err) {
+        // User cancelled or error - don't show error for cancel
+        if (err.name !== 'AbortError') {
+          callback(false);
+        }
+      });
+      return;
     }
 
-    var success = false;
-    try {
-      success = document.execCommand('copy');
-    } catch (err) {
-      success = false;
-    }
-    document.body.removeChild(textArea);
-
-    // If execCommand failed and clipboard API available, try that
-    if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+    // Fall back to clipboard for desktop
+    if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function() {
-        callback(true);
+        callback(true, 'copied');
       }).catch(function() {
         callback(false);
       });
     } else {
-      callback(success);
+      // Last resort: execCommand
+      var textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      var success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (err) {
+        success = false;
+      }
+      document.body.removeChild(textArea);
+      callback(success, 'copied');
     }
   }
 
@@ -343,8 +343,8 @@ document.addEventListener('DOMContentLoaded', function() {
       shareText += 'wow that\'s really amazing!\n\n';
       shareText += window.location.href;
 
-      copyToClipboard(shareText, function(success) {
-        if (success) {
+      shareOrCopy(shareText, puzzleTitle, function(success, method) {
+        if (success && method === 'copied') {
           shareCopied.style.display = 'block';
           setTimeout(function() {
             shareCopied.style.display = 'none';
