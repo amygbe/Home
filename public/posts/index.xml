@@ -15,12 +15,5 @@
       <guid>https://www.amybell.info/posts/goldie_v_world/</guid>
       <description>As I’ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie.</description>
     </item>
-    <item>
-      <title>Making my site with HUGO</title>
-      <link>https://www.amybell.info/posts/hugo_post/</link>
-      <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/posts/hugo_post/</guid>
-      <description>Here&amp;rsquo;s a bit of info about how I made my first ever website with zero prior experience.</description>
-    </item>
   </channel>
 </rss>

@@ -14,37 +14,50 @@ bookshelf_item = [
 +++
 # Hi, I'm Amy!
 
-I'm a data scientist who is a big fan of predictive modeling and data viz. I currently work mainly in Python to build podium probabilities and other interesting predictions for Canadian Olympic teams! I'm also learning a lot about Bayesian stats by taking Richard McElreath's course "Statistical Rethinking" in R and exploring some deep learning with Andrew Ng's Coursera courses. 
+I've always been drawn to the *why* behind the numbers - what's causing a trend, what's driving a result, and what we can do about it. With a background in **Math and Stats** and experience at **Amazon** and in **sports analytics**, I love the challenge of turning messy datasets into actionable insights. My work is fueled by the excitement of solving complex problems and helping teams make smart, data-driven decisions.
 
 {{< gooey-button link="/files/Amy_CV_2026_02_01.pdf" >}}Download My Resume{{< /gooey-button >}}
 {{< greenhr >}}
 
-# Read About my Projects
-
-You can find the repos for these projects [on my github](https://github.com/amygbe)
-{{< projectcards >}}
-
-{{< greenhr >}}
+## What I Do
 
 {{< columns size="large" >}}
-### Work Highlights
-
-These are a few of my favourite topics I've worked on:
-- monte carlo simulations
-- Olympics podium pathways
-- webscraping
-- gradient boosted trees
+### Machine Learning & Analytics
+- Predictive models using gradient boosted trees, regression, and clustering
+- Monte Carlo simulations with Bayesian-derived rating systems
+- Statistical testing and causal inference
+- AI evaluation dataset development
 
 <--->
 
-### Current studies and interests
-- Statistical rethinking, Richard McElreath
-- Deep learning specialization course, Andrew Ng
-- Predictive modelling
-- Bayesian stats
-- data visualization
+### Data Engineering & BI
+- ETL pipeline design and optimization (AWS Redshift, Gluon)
+- Dashboard development (Tableau, QuickSight, Power BI)
+- Automated reporting systems that save 100+ hours annually
+- End-to-end data product ownership
 
 {{< /columns >}}
+
+{{< greenhr >}}
+
+## Career Highlights
+
+**Amazon** - Business Intelligence Engineer
+- Developed gold-standard evaluation datasets enabling objective benchmarking of AI agent performance
+- Engineered dynamic suppression systems that reduced update times from 3+ days to immediate
+- Built self-service analytics platforms saving 12+ hours of team effort monthly
+
+**Canadian Tire Financial Services** - Data Scientist, Sports Analytics
+- Redesigned Monte Carlo simulation framework achieving 10% improvement in podium prediction accuracy
+- Built ML models helping Swimming Canada identify future Olympic medal potential in junior athletes
+- Predicted winning times within 1.5% accuracy at the 2023 World Championships
+
+{{< greenhr >}}
+
+# Projects
+
+You can find the repos for these projects [on my github](https://github.com/amygbe)
+{{< projectcards >}}
 
 {{< greenhr >}}
 

@@ -240,7 +240,7 @@ body .homepage .home-content a:hover {
 
   .project-title {
     margin: 0 0 0.75em 0;
-    color: #087817;
+    color: #2f523e;
   }
 
   .project-body {
@@ -268,7 +268,7 @@ body .homepage .home-content a:hover {
   .post-preview h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
-    color: #087817;
+    color: #2f523e;
   }
 
   .project-card p, .post-preview p {
@@ -292,12 +292,12 @@ body .homepage .home-content a:hover {
   }
   
   .read-more-link a {
-    color: #087817; /*087817*/
+    color: #2f523e; /*087817*/
     text-decoration: none;
   }
   
   .read-more-link a:hover {
-    color: #087817;
+    color: #2f523e;
     text-decoration: underline;
   }
   
@@ -319,7 +319,7 @@ body .homepage .home-content a:hover {
   
   .read-more:hover {
     background-color: #e2c48b !important; /* Ensure the hover color takes precedence */
-    color: #087817 !important; /* Ensure the text color on hover takes precedence */
+    color: #2f523e !important; /* Ensure the text color on hover takes precedence */
   }
   
   .post-footer {
@@ -380,7 +380,7 @@ hr.green {
 }
 
 .about-card .card-header h3 {
-  color: #087817;
+  color: #2f523e;
 }
 
 .about-card-content {
@@ -390,7 +390,7 @@ hr.green {
 }
 
 .about-card-image {
-  flex: 7;
+  flex: 6;
   padding-right: 1em;
   padding-left: 1em;
 }
@@ -686,16 +686,16 @@ gooey button style
 
 .c-button--gooey .c-button__blobs div {
   background-color: var(--green-color);
-  width: 30%;
+  width: 40%;
   height: 100%;
   border-radius: 100%;
   position: absolute;
-  transform: scale(1.4) translateY(125%) translateZ(0);
+  transform: scale(1.7) translateY(125%) translateZ(0);
   transition: all 700ms ease;
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(1) {
-  left: -5%;
+  left: -10%;
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(2) {
@@ -704,12 +704,12 @@ gooey button style
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(3) {
-  left: 66%;
+  left: 70%;
   transition-delay: 25ms;
 }
 
 .c-button--gooey:hover .c-button__blobs div {
-  transform: scale(1.4) translateY(0) translateZ(0);
+  transform: scale(1.7) translateY(0) translateZ(0);
 }
 
 /************************************/

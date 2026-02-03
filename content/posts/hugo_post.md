@@ -10,6 +10,7 @@ categories = ["themes", "syntax"]
 series = ["Themes Guide"]
 aliases = ["migrate-from-jekyl"]
 image = "/images/hugo.png"
+draft = true
 +++
 
 I'll get to this! I've been adding to and updating this site A LOT as of July 2024

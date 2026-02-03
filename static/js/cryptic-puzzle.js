@@ -280,6 +280,39 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hintsBtn) hintsBtn.disabled = true;
   }
 
+  // Fallback copy function for mobile
+  function copyToClipboard(text) {
+    // Try modern clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(function() {
+        return true;
+      }).catch(function() {
+        return fallbackCopy(text);
+      });
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+
+  function fallbackCopy(text) {
+    var textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '0';
+    textArea.setAttribute('readonly', '');
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      return true;
+    } catch (err) {
+      document.body.removeChild(textArea);
+      return false;
+    }
+  }
+
   // Share result
   if (shareBtn) {
     shareBtn.addEventListener('click', function() {
@@ -295,11 +328,13 @@ document.addEventListener('DOMContentLoaded', function() {
       shareText += 'Also please refer Amy for a job!!!\n\n';
       shareText += window.location.href;
 
-      navigator.clipboard.writeText(shareText).then(function() {
-        shareCopied.style.display = 'block';
-        setTimeout(function() {
-          shareCopied.style.display = 'none';
-        }, 2000);
+      copyToClipboard(shareText).then(function(success) {
+        if (success) {
+          shareCopied.style.display = 'block';
+          setTimeout(function() {
+            shareCopied.style.display = 'none';
+          }, 2000);
+        }
       });
     });
   }

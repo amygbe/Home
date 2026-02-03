@@ -9,7 +9,7 @@ enableEmoji = true
 
 [params]
 author = "Amy Bell"
-description = "Data Scientist"
+# description = "Data Scientist"
 homepage = "homepage/home.md"
 
 ## Set one of:
