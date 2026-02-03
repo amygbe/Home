@@ -234,17 +234,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check button
   if (checkBtn) {
     checkBtn.addEventListener('click', checkAnswer);
+    checkBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      checkAnswer();
+    });
   }
 
   // Hints button - toggle panel
+  function toggleHints() {
+    if (hintsPanel.style.display === 'none') {
+      hintsPanel.style.display = 'block';
+      hintsPanel.classList.add('slide-in');
+    } else {
+      hintsPanel.style.display = 'none';
+    }
+  }
+
   if (hintsBtn && hintsPanel) {
-    hintsBtn.addEventListener('click', function() {
-      if (hintsPanel.style.display === 'none') {
-        hintsPanel.style.display = 'block';
-        hintsPanel.classList.add('slide-in');
-      } else {
-        hintsPanel.style.display = 'none';
-      }
+    hintsBtn.addEventListener('click', toggleHints);
+    hintsBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      toggleHints();
     });
   }
 

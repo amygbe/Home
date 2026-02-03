@@ -823,6 +823,8 @@ gooey button style
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .puzzle-btn-filled {
@@ -837,14 +839,12 @@ gooey button style
 
 .puzzle-btn-outline {
   background-color: #fff;
-  color: #666;
-  border: 3px solid #999;
+  color: #2a2a2a;
+  border: 3px solid #2a2a2a;
 }
 
 .puzzle-btn-outline:hover:not(:disabled) {
   background-color: #f5f5f5;
-  border-color: #666;
-  color: #333;
 }
 
 .puzzle-btn:disabled {
