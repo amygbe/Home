@@ -744,6 +744,9 @@ gooey button style
   padding: 1.25em 1.5em;
   border-radius: 16px;
   margin-bottom: 0.75em;
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Solved Counter */
@@ -766,6 +769,8 @@ gooey button style
   color: #1a1a1a;
   margin: 0;
   line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   text-align: left;
 }
 
@@ -1079,7 +1084,11 @@ gooey button style
   }
 
   .puzzle-clue {
-    font-size: 1.2em;
+    font-size: 1.1em;
+  }
+
+  .puzzle-clue-box {
+    padding: 1em;
   }
 
   .letter-box {
