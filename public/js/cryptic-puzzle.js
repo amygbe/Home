@@ -303,20 +303,34 @@ document.addEventListener('DOMContentLoaded', function() {
     var textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
-    textArea.style.left = '-9999px';
     textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
     textArea.setAttribute('readonly', '');
     document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
+
+    // iOS specific handling
+    var range = document.createRange();
+    range.selectNodeContents(textArea);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    textArea.setSelectionRange(0, 999999);
+
+    var success = false;
     try {
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      return true;
+      success = document.execCommand('copy');
     } catch (err) {
-      document.body.removeChild(textArea);
-      return false;
+      success = false;
     }
+    document.body.removeChild(textArea);
+    return success;
   }
 
   // Share result
@@ -326,10 +340,15 @@ document.addEventListener('DOMContentLoaded', function() {
       // Convert "Cryptic Puzzle #1" to "Amy's Cryptic #1"
       var shareTitle = puzzleTitle.replace('Cryptic Puzzle', "Amy's Cryptic");
 
+      // Get the clue text
+      var clueEl = document.querySelector('.puzzle-clue');
+      var clueText = clueEl ? clueEl.textContent.trim() : '';
+
       var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
       var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
 
       var shareText = shareTitle + '\n';
+      shareText += '"' + clueText + '"\n';
       shareText += 'Solved with ' + hintText + ' and ' + guessText + '.\n';
       shareText += 'wow that\'s really amazing!\n\n';
       shareText += window.location.href;
