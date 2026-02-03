@@ -16,7 +16,7 @@ bookshelf_item = [
 
 I'm a data scientist who is a big fan of predictive modeling and data viz. I currently work mainly in Python to build podium probabilities and other interesting predictions for Canadian Olympic teams! I'm also learning a lot about Bayesian stats by taking Richard McElreath's course "Statistical Rethinking" in R and exploring some deep learning with Andrew Ng's Coursera courses. 
 
-{{< gooey-button link="/files/amy_resume.pdf" >}}Download My Resume{{< /gooey-button >}}
+{{< gooey-button link="/files/Amy_CV_2026_02_01.pdf" >}}Download My Resume{{< /gooey-button >}}
 {{< greenhr >}}
 
 # Read About my Projects
@@ -45,6 +45,10 @@ These are a few of my favourite topics I've worked on:
 - data visualization
 
 {{< /columns >}}
+
+{{< greenhr >}}
+
+{{< puzzle-card >}}
 
 {{< greenhr >}}
 

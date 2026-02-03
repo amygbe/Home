@@ -1,0 +1,106 @@
+{{ $puzzle := .Page.Params.puzzle }}
+{{ if $puzzle }}
+{{ $answerHash := crypto.SHA256 (upper $puzzle.answer) }}
+{{ $answerLen := len $puzzle.answer }}
+{{ $puzzleId := .Page.File.ContentBaseName }}
+<div class="cryptic-puzzle"
+     data-answer-hash="{{ $answerHash }}"
+     data-answer-length="{{ $answerLen }}"
+     data-puzzle-id="{{ $puzzleId }}">
+
+  <!-- Clue Box -->
+  <div class="puzzle-clue-box">
+    <p class="puzzle-clue">{{ $puzzle.clue }} {{ $puzzle.enumeration }}</p>
+  </div>
+
+  <!-- Solved Counter -->
+  <div class="puzzle-solved-counter">
+    <span id="solved-count">0</span> solved
+  </div>
+
+  <!-- Connected Letter Boxes -->
+  <div class="puzzle-letter-grid">
+    {{ range seq $answerLen }}
+    <input type="text"
+           class="letter-box"
+           maxlength="1"
+           autocomplete="off"
+           autocorrect="off"
+           autocapitalize="characters"
+           spellcheck="false">
+    {{ end }}
+  </div>
+
+  <!-- Buttons Row -->
+  <div class="puzzle-buttons">
+    <button id="hints-btn" class="puzzle-btn puzzle-btn-filled">
+      hints
+    </button>
+    <button id="check-answer-btn" class="puzzle-btn puzzle-btn-outline">
+      check
+    </button>
+  </div>
+
+  <!-- Hints Panel (hidden by default) -->
+  {{ with $puzzle.hints }}
+  <div id="hints-panel" class="hints-panel" style="display: none;">
+    {{ with .fodder }}
+    <div class="hint-option" data-hint="fodder">
+      <span class="hint-icon">○</span>
+      <span class="hint-label">Fodder</span>
+      <div class="hint-content" style="display: none;">{{ . }}</div>
+    </div>
+    {{ end }}
+    {{ with .definition }}
+    <div class="hint-option" data-hint="definition">
+      <span class="hint-icon">○</span>
+      <span class="hint-label">Definition</span>
+      <div class="hint-content" style="display: none;">{{ . }}</div>
+    </div>
+    {{ end }}
+    {{ with .indicators }}
+    <div class="hint-option" data-hint="indicators">
+      <span class="hint-icon">○</span>
+      <span class="hint-label">Indicators</span>
+      <div class="hint-content" style="display: none;">{{ . }}</div>
+    </div>
+    {{ end }}
+    {{ with .indicator }}
+    <div class="hint-option" data-hint="indicator">
+      <span class="hint-icon">○</span>
+      <span class="hint-label">Indicator</span>
+      <div class="hint-content" style="display: none;">{{ . }}</div>
+    </div>
+    {{ end }}
+    {{ with .wordplay }}
+    <div class="hint-option" data-hint="wordplay">
+      <span class="hint-icon">○</span>
+      <span class="hint-label">Wordplay</span>
+      <div class="hint-content" style="display: none;">{{ . }}</div>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <!-- Floating Message (for wrong answers) -->
+  <div id="floating-message" class="floating-message"></div>
+
+  <!-- Congrats Popup -->
+  <div id="congrats-popup" class="congrats-popup" style="display: none;" data-puzzle-title="{{ .Page.Title }}">
+    <div class="congrats-content">
+      <h2>Congrats!</h2>
+      <p id="congrats-text">You solved it!</p>
+      <div class="congrats-buttons">
+        <button id="share-result" class="puzzle-btn puzzle-btn-outline">Share Result</button>
+        <button id="close-congrats" class="puzzle-btn puzzle-btn-filled">Nice!</button>
+      </div>
+      <p id="share-copied" class="share-copied" style="display: none;">Copied to clipboard!</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="{{ "js/cryptic-puzzle.js" | relURL }}"></script>
+{{ else }}
+<p class="puzzle-error">Error: No puzzle data found.</p>
+{{ end }}

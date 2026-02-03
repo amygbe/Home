@@ -52,6 +52,12 @@ customJs = ["js/blog.js"]
   url = "/posts/"
 
   [[menu.main]]
+  name = "Puzzles"
+  weight = 150
+  identifier = "puzzles"
+  url = "/puzzles/"
+
+  [[menu.main]]
   name = "About"
   identifier = "about"
   weight = 300

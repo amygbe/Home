@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="post puzzle-page">
+  <h1 class="title">{{ .Title }}</h1>
+  {{ .Content }}
+
+  <div class="puzzle-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <a href="{{ .RelPermalink }}" class="puzzle-list-item">
+      <span class="puzzle-list-title">{{ .Title }}</span>
+      {{ with .Params.puzzle.enumeration }}
+      <span class="puzzle-list-enum">{{ . }}</span>
+      {{ end }}
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

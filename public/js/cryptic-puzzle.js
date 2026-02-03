@@ -1,0 +1,265 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var puzzle = document.querySelector('.cryptic-puzzle');
+  if (!puzzle) return;
+
+  var answerHash = puzzle.dataset.answerHash;
+  var answerLength = parseInt(puzzle.dataset.answerLength) || 0;
+  var puzzleId = puzzle.dataset.puzzleId;
+
+  var letterBoxes = document.querySelectorAll('.letter-box');
+  var checkBtn = document.getElementById('check-answer-btn');
+  var hintsBtn = document.getElementById('hints-btn');
+  var hintsPanel = document.getElementById('hints-panel');
+  var floatingMsg = document.getElementById('floating-message');
+  var congratsPopup = document.getElementById('congrats-popup');
+  var closeCongrats = document.getElementById('close-congrats');
+  var shareBtn = document.getElementById('share-result');
+  var shareCopied = document.getElementById('share-copied');
+  var solvedCountEl = document.getElementById('solved-count');
+
+  var hintsUsed = 0;
+  var wrongGuesses = 0;
+  var totalHints = document.querySelectorAll('.hint-option').length;
+
+  // Solved counter using localStorage
+  function getSolvedCount() {
+    var counts = JSON.parse(localStorage.getItem('puzzleSolvedCounts') || '{}');
+    return counts[puzzleId] || 0;
+  }
+
+  function incrementSolvedCount() {
+    var counts = JSON.parse(localStorage.getItem('puzzleSolvedCounts') || '{}');
+    counts[puzzleId] = (counts[puzzleId] || 0) + 1;
+    localStorage.setItem('puzzleSolvedCounts', JSON.stringify(counts));
+    return counts[puzzleId];
+  }
+
+  // Display initial solved count
+  if (solvedCountEl) {
+    solvedCountEl.textContent = getSolvedCount();
+  }
+
+  var wrongMessages = [
+    "Try again!",
+    "Not quite...",
+    "Keep trying!",
+    "Almost there?",
+    "Better luck next time!"
+  ];
+
+  // Letter box navigation
+  letterBoxes.forEach(function(box, index) {
+    box.addEventListener('input', function(e) {
+      var value = e.target.value.toUpperCase();
+      e.target.value = value;
+      if (value.length === 1 && index < letterBoxes.length - 1) {
+        letterBoxes[index + 1].focus();
+      }
+    });
+
+    box.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+        letterBoxes[index - 1].focus();
+        letterBoxes[index - 1].value = '';
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowLeft' && index > 0) {
+        letterBoxes[index - 1].focus();
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowRight' && index < letterBoxes.length - 1) {
+        letterBoxes[index + 1].focus();
+        e.preventDefault();
+      }
+      if (e.key === 'Enter') {
+        checkAnswer();
+      }
+    });
+
+    box.addEventListener('focus', function() {
+      this.select();
+    });
+  });
+
+  // Hash function
+  async function hashAnswer(input) {
+    var normalized = input.toUpperCase().trim().replace(/\s/g, '');
+    var encoder = new TextEncoder();
+    var data = encoder.encode(normalized);
+    var hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    var hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(function(b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  // Get answer from boxes
+  function getAnswer() {
+    var answer = '';
+    letterBoxes.forEach(function(box) {
+      answer += box.value || '';
+    });
+    return answer;
+  }
+
+  // Check answer
+  async function checkAnswer() {
+    var userInput = getAnswer();
+    if (userInput.length < answerLength) {
+      showFloatingMessage('Fill in all letters!');
+      return;
+    }
+
+    var userHash = await hashAnswer(userInput);
+
+    if (userHash === answerHash) {
+      showCongrats();
+    } else {
+      wrongGuesses++;
+      var msg = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+      showFloatingMessage(msg);
+      // Shake boxes
+      letterBoxes.forEach(function(box) {
+        box.classList.add('shake');
+        setTimeout(function() {
+          box.classList.remove('shake');
+        }, 500);
+      });
+    }
+  }
+
+  // Floating message (fades down)
+  function showFloatingMessage(msg) {
+    floatingMsg.textContent = msg;
+    floatingMsg.classList.remove('fade-down');
+    void floatingMsg.offsetWidth; // Trigger reflow
+    floatingMsg.classList.add('fade-down');
+  }
+
+  // Confetti explosion
+  function fireConfetti() {
+    var duration = 3000;
+    var end = Date.now() + duration;
+
+    // Initial big burst
+    confetti({
+      particleCount: 150,
+      spread: 180,
+      origin: { y: 0.6 }
+    });
+
+    // Continuous confetti
+    var interval = setInterval(function() {
+      if (Date.now() > end) {
+        clearInterval(interval);
+        return;
+      }
+
+      // Left side
+      confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 80,
+        origin: { x: 0, y: 0.6 }
+      });
+
+      // Right side
+      confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 80,
+        origin: { x: 1, y: 0.6 }
+      });
+    }, 250);
+  }
+
+  // Congrats popup
+  function showCongrats() {
+    // Fire the confetti!
+    fireConfetti();
+
+    // Increment and update solved count
+    var newCount = incrementSolvedCount();
+    if (solvedCountEl) {
+      solvedCountEl.textContent = newCount;
+    }
+
+    congratsPopup.style.display = 'flex';
+
+    // Update congrats text based on hints and wrong guesses
+    var congratsText = document.getElementById('congrats-text');
+    var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
+    var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
+    congratsText.textContent = "Solved with " + hintText + " and " + guessText + "!";
+
+    letterBoxes.forEach(function(box) {
+      box.disabled = true;
+      box.classList.add('correct');
+    });
+    if (checkBtn) checkBtn.disabled = true;
+    if (hintsBtn) hintsBtn.disabled = true;
+  }
+
+  // Share result
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function() {
+      var puzzleTitle = congratsPopup.dataset.puzzleTitle || 'Cryptic Puzzle';
+      // Convert "Cryptic Puzzle #1" to "Amy's Cryptic #1"
+      var shareTitle = puzzleTitle.replace('Cryptic Puzzle', "Amy's Cryptic");
+
+      var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
+      var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
+
+      var shareText = shareTitle + '\n';
+      shareText += 'Solved with ' + hintText + ' and ' + guessText + '.\n';
+      shareText += 'Also please refer Amy for a job!!!\n\n';
+      shareText += window.location.href;
+
+      navigator.clipboard.writeText(shareText).then(function() {
+        shareCopied.style.display = 'block';
+        setTimeout(function() {
+          shareCopied.style.display = 'none';
+        }, 2000);
+      });
+    });
+  }
+
+  // Close congrats
+  if (closeCongrats) {
+    closeCongrats.addEventListener('click', function() {
+      congratsPopup.style.display = 'none';
+    });
+  }
+
+  // Check button
+  if (checkBtn) {
+    checkBtn.addEventListener('click', checkAnswer);
+  }
+
+  // Hints button - toggle panel
+  if (hintsBtn && hintsPanel) {
+    hintsBtn.addEventListener('click', function() {
+      if (hintsPanel.style.display === 'none') {
+        hintsPanel.style.display = 'block';
+        hintsPanel.classList.add('slide-in');
+      } else {
+        hintsPanel.style.display = 'none';
+      }
+    });
+  }
+
+  // Hint options - click to reveal
+  var hintOptions = document.querySelectorAll('.hint-option');
+  hintOptions.forEach(function(option) {
+    option.addEventListener('click', function() {
+      var content = option.querySelector('.hint-content');
+      var icon = option.querySelector('.hint-icon');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '●';
+        option.classList.add('revealed');
+        hintsUsed++;
+      }
+    });
+  });
+});

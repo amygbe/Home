@@ -239,17 +239,29 @@ body .homepage .home-content a:hover {
     flex-direction: row;
     align-items: center;
   }
-  
+
+  /* Clickable project cards */
+  a.project-card {
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  a.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
   .project-content, .post-content {
     flex: 1;
     padding-right: 1em;
   }
-  
+
   .project-card h3, .post-preview h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
+    color: #087817;
   }
-  
+
   .project-card p, .post-preview p {
     color: #666;
   }
@@ -327,6 +339,27 @@ hr.green {
 }
 
 /***********************************/
+/* Clickable card link wrapper */
+/***********************************/
+.card-link {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header h3 {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 2.2em;
+  font-weight: bold;
+}
+
+/***********************************/
 /* Style for the about card */
 /***********************************/
 .about-card {
@@ -336,18 +369,8 @@ hr.green {
   margin-bottom: 1em;
 }
 
-.about-card h3 a {
+.about-card .card-header h3 {
   color: #087817;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 2.2em; /* Increase the font size for the heading */
-  margin: 0; 
-  padding-top: 0; 
-  padding-left: 0.5em;
-}
-
-.about-card h3 a:hover {
-  text-decoration: underline;
 }
 
 .about-card-content {
@@ -357,7 +380,7 @@ hr.green {
 }
 
 .about-card-image {
-  flex: 7; /* Increase the flex to make the image take up more space */
+  flex: 7;
   padding-right: 1em;
   padding-left: 1em;
 }
@@ -368,8 +391,8 @@ hr.green {
 }
 
 .about-card-text {
-  flex: 2; /* Adjust flex to shift main text to the right */
-  padding-left: 0.5;
+  flex: 2;
+  padding-left: 0.5em;
 }
 
 .about-card-text p {
@@ -377,6 +400,51 @@ hr.green {
   margin: 0;
 }
 
+/***********************************/
+/* Style for the puzzle card on homepage */
+/***********************************/
+.puzzle-card-home {
+  background-color: #C8D5B9;
+  padding: 0em;
+  border-radius: 15px;
+  margin-bottom: 1em;
+}
+
+.puzzle-card-home .card-header h3 {
+  color: #2f523e;
+}
+
+.puzzle-card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.puzzle-card-image {
+  flex: 1;
+  padding: 1em;
+}
+
+.puzzle-card-image img {
+  width: 100%;
+  max-width: 120px;
+  border-radius: 15px;
+}
+
+.puzzle-card-text {
+  flex: 3;
+  padding-right: 1em;
+}
+
+.puzzle-card-text p {
+  color: #333;
+  margin: 0;
+}
+
+.puzzle-card-text a {
+  color: #2f523e;
+  font-weight: 600;
+}
 
 /***********************************/
 /* Style for the video game tier list */
@@ -576,6 +644,12 @@ gooey button style
   border-color: var(--green-color); /* Keep border color on hover */
 }
 
+/* Smaller version for Read More buttons */
+.c-button--small {
+  font-size: 0.7em;
+  padding: 0.3em 0.8em;
+}
+
 .c-button {
   color: var(--button-text-color) !important; /* Override general link color */
   font-weight: 600;
@@ -626,4 +700,389 @@ gooey button style
 
 .c-button--gooey:hover .c-button__blobs div {
   transform: scale(1.4) translateY(0) translateZ(0);
+}
+
+/************************************/
+/* Cryptic Puzzle Styling           */
+/* Minute Cryptic style, green/brown */
+/************************************/
+
+/* Puzzle page - sage green background */
+.puzzle-page {
+  background-color: #C8D5B9;
+  padding: 1.5em;
+  margin: -20px;
+  margin-top: 0;
+  min-height: calc(100vh - 100px);
+}
+
+.puzzle-page .title {
+  color: #1a1a1a;
+  margin-bottom: 1em;
+}
+
+.cryptic-puzzle {
+  max-width: 420px;
+  padding: 0;
+  position: relative;
+}
+
+/* Clue Box - White with rounded corners */
+.puzzle-clue-box {
+  background-color: #fff;
+  padding: 1.25em 1.5em;
+  border-radius: 16px;
+  margin-bottom: 0.75em;
+}
+
+/* Solved Counter */
+.puzzle-solved-counter {
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 1.5em;
+}
+
+.puzzle-solved-counter #solved-count {
+  font-weight: 600;
+  color: #2f523e;
+}
+
+.puzzle-clue {
+  font-size: 1.4em;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Connected Letter Boxes - Crossword style */
+.puzzle-letter-grid {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
+
+.letter-box {
+  width: 52px;
+  height: 52px;
+  border: 3px solid #2a2a2a;
+  border-left: none;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #fff;
+  color: #1a1a1a;
+  transition: background-color 0.15s ease;
+  caret-color: transparent;
+}
+
+.letter-box:first-child {
+  border-left: 3px solid #2a2a2a;
+  border-radius: 8px 0 0 8px;
+}
+
+.letter-box:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.letter-box:focus {
+  outline: none;
+  background-color: #E8F0E0;
+}
+
+.letter-box:disabled {
+  background-color: #f0f0f0;
+}
+
+.letter-box.correct {
+  background-color: #d4edda;
+}
+
+.letter-box.shake {
+  animation: shake 0.4s ease;
+}
+
+/* Buttons - Pill shaped, side by side */
+.puzzle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75em;
+  margin: 2em 0 1em 0;
+}
+
+.puzzle-btn {
+  padding: 0.9em 2.5em;
+  font-size: 1.1em;
+  font-style: italic;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.puzzle-btn-filled {
+  background-color: #E8DFC4;
+  color: #1a1a1a;
+  border: 3px solid #2a2a2a;
+}
+
+.puzzle-btn-filled:hover:not(:disabled) {
+  background-color: #DDD4B8;
+}
+
+.puzzle-btn-outline {
+  background-color: #fff;
+  color: #666;
+  border: 3px solid #999;
+}
+
+.puzzle-btn-outline:hover:not(:disabled) {
+  background-color: #f5f5f5;
+  border-color: #666;
+  color: #333;
+}
+
+.puzzle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Hints Panel */
+.hints-panel {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 0.5em;
+  margin-top: 1em;
+  border: 2px solid #2a2a2a;
+}
+
+.hints-panel.slide-in {
+  animation: slideDown 0.3s ease;
+}
+
+.hint-option {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75em 1em;
+  margin-bottom: 0.25em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hint-option:last-child {
+  margin-bottom: 0;
+}
+
+.hint-option:hover:not(.revealed) {
+  background-color: #f5f5f5;
+}
+
+.hint-option.revealed {
+  background-color: #E8F0E0;
+  cursor: default;
+  flex-direction: column;
+}
+
+.hint-icon {
+  margin-right: 0.75em;
+  color: #2a2a2a;
+  font-size: 1em;
+}
+
+.hint-label {
+  color: #1a1a1a;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.hint-content {
+  color: #333;
+  margin-top: 0.5em;
+  padding-left: 1.75em;
+  font-size: 0.95em;
+}
+
+/* Floating Message (wrong answer) */
+.floating-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8em;
+  font-weight: 600;
+  font-style: italic;
+  color: #2a2a2a;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 100;
+}
+
+.floating-message.fade-down {
+  animation: fadeDown 1.5s ease forwards;
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 100px);
+  }
+}
+
+/* Congrats Popup */
+.congrats-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.congrats-content {
+  background-color: #fff;
+  padding: 2.5em 3em;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.3s ease;
+}
+
+.congrats-content h2 {
+  color: #2a2a2a;
+  font-size: 2.2em;
+  margin: 0 0 0.5em 0;
+  font-weight: 600;
+}
+
+.congrats-content p {
+  color: #666;
+  margin-bottom: 1.5em;
+  font-size: 1.1em;
+}
+
+.congrats-buttons {
+  display: flex;
+  gap: 0.75em;
+  justify-content: center;
+}
+
+.share-copied {
+  color: #2f523e;
+  font-size: 0.9em;
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* Puzzle List Page */
+.puzzle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  margin-top: 1.5em;
+}
+
+.puzzle-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1.25em;
+  background-color: #fff;
+  border: 2px solid #2a2a2a;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.puzzle-list-item:hover {
+  background-color: #E8DFC4;
+  transform: translateX(5px);
+}
+
+.puzzle-list-title {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.puzzle-list-enum {
+  font-size: 0.9em;
+  color: #888;
+  font-style: italic;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .puzzle-container {
+    padding: 1em 0.5em;
+  }
+
+  .cryptic-puzzle {
+    padding: 0.5em;
+  }
+
+  .puzzle-clue {
+    font-size: 1.2em;
+  }
+
+  .letter-box {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3em;
+  }
+
+  .puzzle-buttons {
+    gap: 0.5em;
+  }
+
+  .puzzle-btn {
+    padding: 0.8em 1.5em;
+    font-size: 1em;
+  }
+
+  .congrats-content {
+    margin: 1em;
+    padding: 2em;
+  }
 }
