@@ -40,20 +40,6 @@ I've always been drawn to the *why* behind the numbers - what's causing a trend,
 
 {{< greenhr >}}
 
-## Career Highlights
-
-**Amazon** - Business Intelligence Engineer
-- Developed gold-standard evaluation datasets enabling objective benchmarking of AI agent performance
-- Engineered dynamic suppression systems that reduced update times from 3+ days to immediate
-- Built self-service analytics platforms saving 12+ hours of team effort monthly
-
-**Canadian Tire Financial Services** - Data Scientist, Sports Analytics
-- Redesigned Monte Carlo simulation framework achieving 10% improvement in podium prediction accuracy
-- Built ML models helping Swimming Canada identify future Olympic medal potential in junior athletes
-- Predicted winning times within 1.5% accuracy at the 2023 World Championships
-
-{{< greenhr >}}
-
 # Projects
 
 You can find the repos for these projects [on my github](https://github.com/amygbe)
