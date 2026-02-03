@@ -11,6 +11,11 @@
   <!-- Clue Box -->
   <div class="puzzle-clue-box">
     <p class="puzzle-clue">{{ $puzzle.clue }} {{ $puzzle.enumeration }}</p>
+    {{ with $puzzle.difficulty }}
+    <div class="puzzle-difficulty">
+      {{ partial "difficulty-stars.html" . }}
+    </div>
+    {{ end }}
   </div>
 
   <!-- Solved Counter -->

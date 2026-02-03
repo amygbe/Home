@@ -14,7 +14,7 @@ bookshelf_item = [
 +++
 # Hi, I'm Amy!
 
-I've always been drawn to the *why* behind the numbers - what's causing a trend, what's driving a result, and what we can do about it. With a background in **Math and Stats** and experience at **Amazon** and in **sports analytics**, I love the challenge of turning messy datasets into actionable insights. My work is fueled by the excitement of solving complex problems and helping teams make smart, data-driven decisions.
+I’ve always been drawn to the *why* behind the numbers—what’s causing a trend, what’s driving a result, and what we can do about it. That curiosity is what pulled me into math and stats in the first place, and it’s what I’ve carried into my work at *Amazon* and in sports modelling. I enjoy taking messy, real-world data and turning it into insights people can actually use. I’m fueled by solving complex problems and helping teams make smart, data-driven decisions.
 
 {{< gooey-button link="/files/Amy_CV_2026_02_01.pdf" >}}Download My Resume{{< /gooey-button >}}
 {{< greenhr >}}
@@ -22,18 +22,17 @@ I've always been drawn to the *why* behind the numbers - what's causing a trend,
 ## What I Do
 
 {{< columns size="large" >}}
-### Machine Learning & Analytics
+### Machine Learning, Analytics & AI
 - Predictive models using gradient boosted trees, regression, and clustering
 - Monte Carlo simulations with Bayesian-derived rating systems
 - Statistical testing and causal inference
-- AI evaluation dataset development
+- Agentic AI evaluation dataset development
 
 <--->
 
 ### Data Engineering & BI
 - ETL pipeline design and optimization (AWS Redshift, Gluon)
 - Dashboard development (Tableau, QuickSight, Power BI)
-- Automated reporting systems that save 100+ hours annually
 - End-to-end data product ownership
 
 {{< /columns >}}

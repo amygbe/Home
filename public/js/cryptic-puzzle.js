@@ -288,8 +288,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Share or copy text - uses native share on mobile, clipboard on desktop
   function shareOrCopy(text, title, callback) {
-    // Try Web Share API first (works great on mobile)
-    if (navigator.share) {
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Use native share API only on mobile
+    if (isMobile && navigator.share) {
       navigator.share({
         title: title,
         text: text
@@ -304,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Fall back to clipboard for desktop
+    // Use clipboard on desktop
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function() {
         callback(true, 'copied');

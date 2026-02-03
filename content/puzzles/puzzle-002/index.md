@@ -1,5 +1,5 @@
 +++
-title = "Amy's Cryptic #2 - An array of directionless sweaters inside a mix"
+title = "Cryptic #2 - An array of directionless sweaters inside a mix"
 date = "2026-02-02"
 description = "A cryptic clue to solve"
 
@@ -7,6 +7,7 @@ description = "A cryptic clue to solve"
 clue = "An array of directionless sweaters inside a mix"
 answer = "MATRIX"
 enumeration = "(6)"
+difficulty = 2
 
 [puzzle.hints]
 fodder = "sweaters, mix"

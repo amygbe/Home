@@ -7,9 +7,14 @@
     {{ range .Pages.ByDate.Reverse }}
     <a href="{{ .RelPermalink }}" class="puzzle-list-item">
       <span class="puzzle-list-title">{{ .Title }}</span>
-      {{ with .Params.puzzle.enumeration }}
-      <span class="puzzle-list-enum">{{ . }}</span>
-      {{ end }}
+      <span class="puzzle-list-meta">
+        {{ with .Params.puzzle.difficulty }}
+        {{ partial "difficulty-stars.html" . }}
+        {{ end }}
+        {{ with .Params.puzzle.enumeration }}
+        <span class="puzzle-list-enum">{{ . }}</span>
+        {{ end }}
+      </span>
     </a>
     {{ end }}
   </div>

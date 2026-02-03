@@ -268,7 +268,7 @@ body .homepage .home-content a:hover {
   .post-preview h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
-    color: #2f523e;
+    color: #087817;
   }
 
   .project-card p, .post-preview p {
@@ -292,12 +292,12 @@ body .homepage .home-content a:hover {
   }
   
   .read-more-link a {
-    color: #2f523e; /*087817*/
+    color: #087817; /*087817*/
     text-decoration: none;
   }
   
   .read-more-link a:hover {
-    color: #2f523e;
+    color: #087817;
     text-decoration: underline;
   }
   
@@ -319,7 +319,7 @@ body .homepage .home-content a:hover {
   
   .read-more:hover {
     background-color: #e2c48b !important; /* Ensure the hover color takes precedence */
-    color: #2f523e !important; /* Ensure the text color on hover takes precedence */
+    color: #087817 !important; /* Ensure the text color on hover takes precedence */
   }
   
   .post-footer {
@@ -380,7 +380,7 @@ hr.green {
 }
 
 .about-card .card-header h3 {
-  color: #2f523e;
+  color: #087817;
 }
 
 .about-card-content {
@@ -390,7 +390,7 @@ hr.green {
 }
 
 .about-card-image {
-  flex: 6;
+  flex: 7;
   padding-right: 1em;
   padding-left: 1em;
 }
@@ -686,16 +686,16 @@ gooey button style
 
 .c-button--gooey .c-button__blobs div {
   background-color: var(--green-color);
-  width: 40%;
+  width: 30%;
   height: 100%;
   border-radius: 100%;
   position: absolute;
-  transform: scale(1.7) translateY(125%) translateZ(0);
+  transform: scale(1.4) translateY(125%) translateZ(0);
   transition: all 700ms ease;
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(1) {
-  left: -10%;
+  left: -5%;
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(2) {
@@ -704,12 +704,12 @@ gooey button style
 }
 
 .c-button--gooey .c-button__blobs div:nth-child(3) {
-  left: 70%;
+  left: 66%;
   transition-delay: 25ms;
 }
 
 .c-button--gooey:hover .c-button__blobs div {
-  transform: scale(1.7) translateY(0) translateZ(0);
+  transform: scale(1.4) translateY(0) translateZ(0);
 }
 
 /************************************/
@@ -744,9 +744,6 @@ gooey button style
   padding: 1.25em 1.5em;
   border-radius: 16px;
   margin-bottom: 0.75em;
-  overflow: visible;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 /* Solved Counter */
@@ -769,8 +766,6 @@ gooey button style
   color: #1a1a1a;
   margin: 0;
   line-height: 1.5;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
   text-align: left;
 }
 
@@ -1073,6 +1068,49 @@ gooey button style
   font-style: italic;
 }
 
+.puzzle-list-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+/* Difficulty Stars */
+.difficulty-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15em;
+}
+
+.star {
+  width: 1em;
+  height: 1em;
+  color: #4a7c59;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.star-full {
+  fill: #4a7c59;
+}
+
+.star-half {
+  color: #4a7c59;
+}
+
+.star-empty {
+  color: #4a7c59;
+}
+
+.puzzle-difficulty {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.puzzle-difficulty .star {
+  width: 1.1em;
+  height: 1.1em;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .puzzle-container {
@@ -1084,11 +1122,7 @@ gooey button style
   }
 
   .puzzle-clue {
-    font-size: 1.1em;
-  }
-
-  .puzzle-clue-box {
-    padding: 1em;
+    font-size: 1.2em;
   }
 
   .letter-box {

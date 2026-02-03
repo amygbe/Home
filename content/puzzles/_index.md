@@ -3,4 +3,4 @@ title = "Cryptic Puzzles"
 description = "Cryptic crossword clues to solve"
 +++
 
-Test your cryptic crossword skills! Each puzzle is a single clue with hints if you need them.
+Test your cryptic crossword skills! Each puzzle is made by me and has hints if you need them!
