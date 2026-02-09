@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Amy Bell</title>
-    <link>https://www.amybell.info/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Amy Bell</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 09 Feb 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://www.amybell.info/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cryptic #4 - Boy at the club</title>
-      <link>https://www.amybell.info/puzzles/puzzle-004/</link>
+      <link>http://localhost:1313/puzzles/puzzle-004/</link>
       <pubDate>Mon, 09 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/puzzles/puzzle-004/</guid>
-      <description>Boy at the club (2)&#xA;0 solved hints check ○ Fodder Boy, at ○ Definition club ○ Indicators None explicitly!</description>
+      <guid>http://localhost:1313/puzzles/puzzle-004/</guid>
+      <description>Boy at the club (3)&#xA;0 solved hints check ○ Fodder Boy, at ○ Definition club ○ Indicators None explicitly!</description>
     </item>
     <item>
       <title>Cryptic #5 - Incomplete wish, surrounded by the top of the wind?</title>
-      <link>https://www.amybell.info/puzzles/puzzle-005/</link>
+      <link>http://localhost:1313/puzzles/puzzle-005/</link>
       <pubDate>Mon, 09 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/puzzles/puzzle-005/</guid>
+      <guid>http://localhost:1313/puzzles/puzzle-005/</guid>
       <description>Incomplete wish, surrounded by the top of the wind? (5)</description>
     </item>
     <item>
       <title>Cryptic #2 - An array of directionless sweaters inside a mix</title>
-      <link>https://www.amybell.info/puzzles/puzzle-002/</link>
+      <link>http://localhost:1313/puzzles/puzzle-002/</link>
       <pubDate>Mon, 02 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/puzzles/puzzle-002/</guid>
+      <guid>http://localhost:1313/puzzles/puzzle-002/</guid>
       <description>An array of directionless sweaters inside a mix (6)</description>
     </item>
     <item>
       <title>Cryptic #3 - Jay says, a prime gobble, cardinally kissed, reversed my status</title>
-      <link>https://www.amybell.info/puzzles/puzzle-003/</link>
+      <link>http://localhost:1313/puzzles/puzzle-003/</link>
       <pubDate>Mon, 02 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/puzzles/puzzle-003/</guid>
+      <guid>http://localhost:1313/puzzles/puzzle-003/</guid>
       <description>Jay says, a prime gobble, cardinally kissed, reversed my status (7)</description>
     </item>
     <item>
       <title>Cryptic #1 - We hear prohibited musical group</title>
-      <link>https://www.amybell.info/puzzles/puzzle-001/</link>
+      <link>http://localhost:1313/puzzles/puzzle-001/</link>
       <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/puzzles/puzzle-001/</guid>
+      <guid>http://localhost:1313/puzzles/puzzle-001/</guid>
       <description>We hear prohibited musical group (4)&#xA;0 solved hints check ○ Fodder prohibited ○ Definition &amp;#39;Musical group&amp;#39; is the definition ○ Indicators &amp;#39;We hear&amp;#39; indicates a homophone - the answer sounds like another word.</description>
     </item>
     <item>
       <title>Logistic Regression: Goldie Versus The World</title>
-      <link>https://www.amybell.info/posts/goldie_v_world/</link>
+      <link>http://localhost:1313/posts/goldie_v_world/</link>
       <pubDate>Fri, 28 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/posts/goldie_v_world/</guid>
+      <guid>http://localhost:1313/posts/goldie_v_world/</guid>
       <description>As I’ve been learning more about different types of models, I thought, why not try to see how I can use logistic regression to classify my dear cat Goldie.</description>
     </item>
     <item>
       <title></title>
-      <link>https://www.amybell.info/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>More About Me Thanks for taking a look at this page!</description>
     </item>
     <item>
       <title></title>
-      <link>https://www.amybell.info/contact/</link>
+      <link>http://localhost:1313/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/contact/</guid>
+      <guid>http://localhost:1313/contact/</guid>
       <description>Send me a message! Your Name: Your Email: Your Message: Send </description>
     </item>
     <item>
       <title></title>
-      <link>https://www.amybell.info/homepage/home/</link>
+      <link>http://localhost:1313/homepage/home/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://www.amybell.info/homepage/home/</guid>
+      <guid>http://localhost:1313/homepage/home/</guid>
       <description>Hi, I&amp;rsquo;m Amy! I’ve always been drawn to the why behind the numbers—what’s causing a trend, what’s driving a result, and what we can do about it.</description>
     </item>
   </channel>

@@ -6,7 +6,7 @@ description = "A cryptic clue to solve"
 [puzzle]
 clue = "Boy at the club"
 answer = "BAT"
-enumeration = "(2)"
+enumeration = "(3)"
 difficulty = 1.5
 
 [puzzle.hints]
