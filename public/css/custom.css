@@ -724,6 +724,7 @@ gooey button style
   padding: 1.5em;
   margin: -20px;
   margin-top: 0;
+  margin-bottom: 20px;
   min-height: calc(100vh - 100px);
 }
 
@@ -1158,4 +1159,142 @@ gooey button style
     width: 0.85em;
     height: 0.85em;
   }
+
+  .leaderboard-table {
+    font-size: 0.9em;
+  }
+}
+
+/* Leaderboard */
+.puzzle-leaderboard {
+  margin-top: 2.5em;
+  padding-top: 1.5em;
+  border-top: 2px solid #e0e0e0;
+}
+
+.leaderboard-title {
+  font-size: 1.3em;
+  margin-bottom: 0.25em;
+}
+
+.leaderboard-solves {
+  color: #888;
+  font-size: 0.95em;
+  margin-bottom: 1em;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.leaderboard-table th {
+  text-align: left;
+  padding: 0.6em 0.75em;
+  border-bottom: 2px solid #2a2a2a;
+  font-weight: 600;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.leaderboard-table td {
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #f5f5f0;
+}
+
+.leaderboard-table tbody tr:first-child td {
+  color: #2f523e;
+  font-weight: 600;
+}
+
+.leaderboard-empty {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Wrong Answers Section */
+.wrong-answers-section {
+  margin-top: 1.5em;
+}
+
+.wrong-answers-section h4 {
+  font-size: 1em;
+  margin-bottom: 0.75em;
+  color: #666;
+}
+
+.wrong-answers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.wrong-answer-tag {
+  display: inline-block;
+  padding: 0.3em 0.7em;
+  background-color: #f0e6d3;
+  border-radius: 15px;
+  font-size: 0.85em;
+  color: #666;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Name Input in Congrats Popup */
+.congrats-name-section {
+  margin: 1em 0;
+  text-align: center;
+}
+
+.solver-name-input {
+  padding: 0.6em 1em;
+  font-size: 1em;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 250px;
+  text-align: center;
+  margin-bottom: 0.75em;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.solver-name-input:focus {
+  outline: none;
+  border-color: #4a7c59;
+}
+
+.submit-status {
+  font-size: 0.85em;
+  margin-top: 0.5em;
+  color: #888;
+}
+
+/* Global Leaderboard */
+.global-leaderboard {
+  margin-top: 1.5em;
+  padding: 1.25em 1.5em;
+  background-color: #f0ead6;
+  border-radius: 16px;
+}
+
+.global-leaderboard-title {
+  font-size: 1.3em;
+  color: #2f523e;
+  margin-bottom: 0.75em;
+}
+
+.puzzle-page .global-leaderboard {
+  margin-top: 2em;
+  padding-top: 1.5em;
+  border-top: 2px solid #e0e0e0;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
 }

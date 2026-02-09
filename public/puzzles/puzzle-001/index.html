@@ -17,7 +17,7 @@
   <meta itemprop="description" content="A cryptic clue to solve">
   <meta itemprop="datePublished" content="2026-02-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2026-02-01T00:00:00+00:00">
-  <meta itemprop="wordCount" content="52">
+  <meta itemprop="wordCount" content="59">
 
 
   <meta name="twitter:card" content="summary">
@@ -346,12 +346,24 @@
     <div class="congrats-content">
       <h2>Congrats!</h2>
       <p id="congrats-text">You solved it!</p>
+      <div class="congrats-name-section" id="name-section">
+        <input type="text" id="solver-name" class="solver-name-input" placeholder="Your name" maxlength="30" autocomplete="off">
+        <button type="button" id="submit-leaderboard" class="puzzle-btn puzzle-btn-filled">Submit to Leaderboard</button>
+        <p id="submit-status" class="submit-status" style="display: none;"></p>
+      </div>
       <div class="congrats-buttons">
         <button type="button" id="share-result" class="puzzle-btn puzzle-btn-outline">Share Result</button>
         <button type="button" id="close-congrats" class="puzzle-btn puzzle-btn-filled">Nice!</button>
       </div>
       <p id="share-copied" class="share-copied" style="display: none;">Copied to clipboard!</p>
     </div>
+  </div>
+
+  
+  <div id="puzzle-leaderboard" class="puzzle-leaderboard">
+    <h3 class="leaderboard-title">Leaderboard</h3>
+    <p class="leaderboard-solves"><span id="total-solves">0</span> total solves</p>
+    <div id="leaderboard-table-container"></div>
   </div>
 </div>
 

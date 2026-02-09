@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var puzzle = document.querySelector('.cryptic-puzzle');
   if (!puzzle) return;
 
+                         
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLIpdRXnenSFfs0vqY0-Cp2ILhq113IpsSJsPQCIKFmI8GsUTIsZq5pGJgX-chb3QMkg/exec';
+
   var answerHash = puzzle.dataset.answerHash;
   var answerLength = parseInt(puzzle.dataset.answerLength) || 0;
   var puzzleId = puzzle.dataset.puzzleId;
@@ -16,28 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
   var shareBtn = document.getElementById('share-result');
   var shareCopied = document.getElementById('share-copied');
   var solvedCountEl = document.getElementById('solved-count');
+  var submitBtn = document.getElementById('submit-leaderboard');
+  var solverNameInput = document.getElementById('solver-name');
+  var submitStatus = document.getElementById('submit-status');
+  var nameSection = document.getElementById('name-section');
+  var totalSolvesEl = document.getElementById('total-solves');
 
   var hintsUsed = 0;
   var wrongGuesses = 0;
+  var wrongAnswersList = [];
+  var solveTimeSeconds = 0;
+  var puzzleStartTime = Date.now();
   var totalHints = document.querySelectorAll('.hint-option').length;
 
-  // Solved counter using localStorage
-  function getSolvedCount() {
-    var counts = JSON.parse(localStorage.getItem('puzzleSolvedCounts') || '{}');
-    return counts[puzzleId] || 0;
-  }
-
-  function incrementSolvedCount() {
-    var counts = JSON.parse(localStorage.getItem('puzzleSolvedCounts') || '{}');
-    counts[puzzleId] = (counts[puzzleId] || 0) + 1;
-    localStorage.setItem('puzzleSolvedCounts', JSON.stringify(counts));
-    return counts[puzzleId];
-  }
-
-  // Display initial solved count
-  if (solvedCountEl) {
-    solvedCountEl.textContent = getSolvedCount();
-  }
+  // Load leaderboard on page load
+  fetchLeaderboard();
 
   var wrongMessages = [
     "Try again!",
@@ -202,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showCongrats();
     } else {
       wrongGuesses++;
+      wrongAnswersList.push(userInput.toUpperCase());
       var msg = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
       showFloatingMessage(msg);
       // Shake boxes
@@ -261,22 +258,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Congrats popup
   function showCongrats() {
-    // Fire the confetti!
     fireConfetti();
 
-    // Increment and update solved count
-    var newCount = incrementSolvedCount();
-    if (solvedCountEl) {
-      solvedCountEl.textContent = newCount;
-    }
+    solveTimeSeconds = Math.round((Date.now() - puzzleStartTime) / 1000);
 
     congratsPopup.style.display = 'flex';
 
-    // Update congrats text based on hints and wrong guesses
     var congratsText = document.getElementById('congrats-text');
     var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
     var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
-    congratsText.textContent = "Solved with " + hintText + " and " + guessText + "!";
+    var timeText = formatSolveTime(solveTimeSeconds);
+    congratsText.textContent = "Solved in " + timeText + " with " + hintText + " and " + guessText + "!";
 
     letterBoxes.forEach(function(box) {
       box.disabled = true;
@@ -284,6 +276,126 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     if (checkBtn) checkBtn.disabled = true;
     if (hintsBtn) hintsBtn.disabled = true;
+  }
+
+  // Submit to leaderboard
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function() {
+      var name = solverNameInput.value.trim();
+      if (!name) {
+        solverNameInput.focus();
+        solverNameInput.style.borderColor = '#c0392b';
+        return;
+      }
+
+      if (!APPS_SCRIPT_URL) {
+        submitStatus.textContent = 'Leaderboard not configured yet';
+        submitStatus.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          puzzleId: puzzleId,
+          name: name,
+          hintsUsed: hintsUsed,
+          wrongGuesses: wrongGuesses,
+          wrongAnswers: wrongAnswersList.join(', '),
+          solveTime: solveTimeSeconds
+        })
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(result) {
+        if (result.success) {
+          nameSection.innerHTML = '<p class="submit-status" style="display:block; color:#4a7c59;">Submitted! You\'re on the leaderboard.</p>';
+          fetchLeaderboard();
+        } else if (result.error === 'duplicate') {
+          nameSection.innerHTML = '<p class="submit-status" style="display:block; color:#888;">This name has already been submitted for this puzzle.</p>';
+        } else {
+          submitStatus.textContent = 'Something went wrong. Try again!';
+          submitStatus.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit to Leaderboard';
+        }
+      })
+      .catch(function() {
+        submitStatus.textContent = 'Network error. Try again!';
+        submitStatus.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit to Leaderboard';
+      });
+    });
+  }
+
+  // Reset name input border on typing
+  if (solverNameInput) {
+    solverNameInput.addEventListener('input', function() {
+      solverNameInput.style.borderColor = '';
+    });
+  }
+
+  // Fetch and render leaderboard
+  function fetchLeaderboard() {
+    if (!APPS_SCRIPT_URL) return;
+
+    var url = APPS_SCRIPT_URL + '?puzzleId=' + encodeURIComponent(puzzleId);
+    fetch(url)
+      .then(function(response) { return response.json(); })
+      .then(function(data) {
+        if (!data.success) return;
+
+        // Update total solves
+        if (totalSolvesEl) {
+          totalSolvesEl.textContent = data.totalSolves;
+        }
+        if (solvedCountEl) {
+          solvedCountEl.textContent = data.totalSolves;
+        }
+
+        // Render leaderboard table
+        var container = document.getElementById('leaderboard-table-container');
+        if (container && data.leaderboard.length > 0) {
+          var html = '<table class="leaderboard-table">';
+          html += '<thead><tr><th>#</th><th>Name</th><th>Hints</th><th>Wrong</th><th>Time</th></tr></thead>';
+          html += '<tbody>';
+          for (var i = 0; i < data.leaderboard.length; i++) {
+            var entry = data.leaderboard[i];
+            html += '<tr>';
+            html += '<td>' + (i + 1) + '</td>';
+            html += '<td>' + escapeHtml(entry.name) + '</td>';
+            html += '<td>' + entry.hintsUsed + '</td>';
+            html += '<td>' + entry.wrongGuesses + '</td>';
+            html += '<td>' + formatSolveTime(entry.solveTime) + '</td>';
+            html += '</tr>';
+          }
+          html += '</tbody></table>';
+          container.innerHTML = html;
+        } else if (container) {
+          container.innerHTML = '<p class="leaderboard-empty">No solves yet. Be the first!</p>';
+        }
+
+      })
+      .catch(function() {
+        // Silently fail - leaderboard is non-essential
+      });
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatSolveTime(totalSeconds) {
+    if (!totalSeconds) return '-';
+    var mins = Math.floor(totalSeconds / 60);
+    var secs = totalSeconds % 60;
+    if (mins === 0) return secs + 's';
+    return mins + 'm ' + secs + 's';
   }
 
   // Share or copy text - uses native share on mobile, clipboard on desktop
@@ -340,8 +452,9 @@ document.addEventListener('DOMContentLoaded', function() {
       var hintText = hintsUsed === 0 ? 'no hints' : (hintsUsed === 1 ? '1 hint' : hintsUsed + ' hints');
       var guessText = wrongGuesses === 0 ? 'no wrong guesses' : (wrongGuesses === 1 ? '1 wrong guess' : wrongGuesses + ' wrong guesses');
 
+      var timeShareText = solveTimeSeconds > 0 ? ' in ' + formatSolveTime(solveTimeSeconds) : '';
       var shareText = puzzleTitle + '\n';
-      shareText += 'Solved with ' + hintText + ' and ' + guessText + '.\n';
+      shareText += 'Solved' + timeShareText + ' with ' + hintText + ' and ' + guessText + '.\n';
       shareText += 'wow that\'s really amazing!\n\n';
       shareText += window.location.href;
 
